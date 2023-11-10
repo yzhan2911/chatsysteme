@@ -1,8 +1,9 @@
 package protocols;
 
 import java.io.IOException;
+
 import java.net.*;
-import java.net.*;
+
 
 public class UDPreceiver extends  Thread{
    private  int port;
@@ -10,10 +11,19 @@ public class UDPreceiver extends  Thread{
     private DatagramSocket socket;
 public UDPreceiver(String name) {
     super(name);
+
+    
 }
+
+
+
 
 public void beginning(){
     this.begin=true;
+}
+
+public void closethreaud(){
+    this.begin=false;
 }
 public void run(){
     try {
@@ -22,14 +32,20 @@ public void run(){
         throw new RuntimeException(e);
     }
     while(begin){
-
-        byte[] buf = new byte[1024*5];
+        byte[] buf = new byte[2048];
+        
+        DatagramPacket packet= new DatagramPacket(buf, buf.length);
         try {
-            DatagramPacket packet=new DatagramPacket(buf, buf.length,InetAddress.getByName(getName()),port );
-        } catch (UnknownHostException e) {
-            throw new RuntimeException(e);
+            socket.receive(packet);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        
+       
+      
 
     }
+
+
 }
 }

@@ -11,7 +11,7 @@ public class UDPsender extends  Thread {
     public UDPsender (String id ) throws SocketException {
         super(id);
         System.out.println("[UDP] hello , i am "+this.getId());
-        socket = new DatagramSocket(port);
+        this.socket = new DatagramSocket(port);
     }
 
    public static List<InetAddress> listAllBroadcastAddresses() throws SocketException {
@@ -41,6 +41,20 @@ public class UDPsender extends  Thread {
         DatagramPacket packet = new DatagramPacket(buffer, buffer.length, address, port);
         socket.send(packet);
         socket.close();
+    }
+    
+    public List<InetAddress> addMesDes(InetAddress ipdes) throws SocketException{
+        List<InetAddress> list;
+        list = listAllBroadcastAddresses();
+        list.add(ipdes);
+        return list;
+    }
+    
+    public List<InetAddress>enlMesDes(InetAddress ipdes) throws SocketException{
+        List<InetAddress> list;
+        list = listAllBroadcastAddresses();
+        list.remove(ipdes);
+        return list;
     }
     
     public static void broadcast(String broadcastMessage, int port) throws IOException {
