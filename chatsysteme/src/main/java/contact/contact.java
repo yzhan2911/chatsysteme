@@ -8,7 +8,7 @@ public class contact {
     private InetAddress userip;
     private etat useretat;
 
-    public contact(String username,InetAddress userip,etat useretat)
+    public contact(String username,InetAddress userip)
     {
         this.username=username;
         this.userip=userip;
@@ -31,15 +31,15 @@ public void setuserip(InetAddress ip){
 public void setuseretat(etat etat){
     this.useretat=etat;
 }
-private InetAddress getuserip() {
+public InetAddress getuserip() {
     return this.userip;
 }
 
-private String getusername() {
-    return this.getusername();
+public  String getusername() {
+    return this.username;
 }
 
-private etat getuseretat(){
+public etat getuseretat(){
     return this.useretat;
 }
 }
