@@ -1,4 +1,4 @@
-package contact;
+package model.contact;
 
 import java.net.InetAddress;
 

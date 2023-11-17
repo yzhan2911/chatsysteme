@@ -1,18 +1,18 @@
 package model;
-import contact.contact;
-import contact.etat;
+import model.contact.contact;
+import model.contact.etat;
 
 import javax.swing.*;
 import java.net.InetAddress;
 import java.nio.file.*;
 
 
-public class model {
+public class user {
     private contact userlocal;
     private DefaultListModel<contact> userlist;
     private Path localog;
 
-    public model (contact userlocal){
+    public user(contact userlocal){
         this.userlocal=userlocal;
         this.userlist= new DefaultListModel<contact>();
         this.userlocal.setuseretat(etat.DISCONNECTED);

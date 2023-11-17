@@ -1,19 +1,27 @@
-import contact.contact;
-import org.junit.Before;
 
-import java.net.*;
+import protocols.UDP;
+import model.contact.contact;
+import java.util.List;
 
 public class testsession1 {
-    contact userlocal;
-    contact userajout;
-    @Before
-    public  void prepa(){
+    public static void main(String[] args) {
+
+        UDP udpDiscovery = new UDP(8888);
+
+        udpDiscovery.sendDiscoveryRequest();
+
         try {
-                this.userlocal = new contact("local", InetAddress.getLocalHost());
-                this.userajout =new contact("ajout",InetAddress.getByName("10.10.10.10"));
-        } catch (UnknownHostException e) {
-                throw new RuntimeException(e);
+            Thread.sleep(10000); // Attendre 10 secondes
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        List<contact> discoveredContacts = udpDiscovery.getContacts();
+        for (contact contact : discoveredContacts) {
+            System.out.println("Découvert : " + contact);
+
+
         }
     }
-
 }
+
