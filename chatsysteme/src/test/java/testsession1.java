@@ -6,7 +6,7 @@ import java.util.List;
 public class testsession1 {
 
         public static void main(String[] args) {
-            UDP udpDiscovery = new UDP(8888);
+            UDP udpDiscovery = new UDP(8887);
             udpDiscovery.listenForRequestsAndRespond();
         }
 
