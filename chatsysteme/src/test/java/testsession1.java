@@ -1,15 +1,15 @@
-
-import protocols.UDP;
-import model.contact.contact;
-import java.util.List;
-
+import controller.controller;
+import protocols.*;
 public class testsession1 {
+public static void main(String[] args){
+        UDPsender udps = new UDPsender();
+        UDPrecever udpr = new UDPrecever(1129); 
+        controller app = new controller(null, udpr, udps);
 
-        public static void main(String[] args) {
-            UDP udpDiscovery = new UDP(8887);
-            udpDiscovery.listenForRequestsAndRespond();
-        }
-
-
+        
+        udpr.start();
+        udps.sendBroadcast("client",1129);
+        System.out.println("[SERVER] Broadcast envoyé");
+    }
+     
 }
-

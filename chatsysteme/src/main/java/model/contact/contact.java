@@ -14,6 +14,7 @@ public class contact {
         this.userip=userip;
         this.useretat=etat.DISCONNECTED;
     }   
+    
 
 public String toString(){
 
@@ -43,7 +44,7 @@ public etat getuseretat(){
     return this.useretat;
 }
 }
-   
+
 
 
 

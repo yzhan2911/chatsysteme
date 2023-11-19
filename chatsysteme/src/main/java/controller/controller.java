@@ -1,23 +1,43 @@
 package controller;
 
-import view.view;
-import protocols.UDP;
-
+import model.user;
+import protocols.UDPrecever;
+import protocols.UDPsender;
 public class controller {
-    private UDP udpDiscovery;
-    private view view;
+    private user userlocal;
+    private UDPrecever udpr;
+    private UDPsender udps;
 
-    public controller(UDP udpDiscovery, view view) {
-        this.udpDiscovery = udpDiscovery;
-        this.view = view;
-        initView();
+    public controller(user userlocal,UDPrecever udpr,UDPsender udps){
+        this.userlocal=userlocal;
+        this.udpr=udpr;
+        this.udps=udps;
     }
 
-    private void initView() {
-        view.setDiscoverButtonListener(e -> {
-            udpDiscovery.sendDiscoveryRequest();
-            udpDiscovery.listenForResponses();
-        });
+
+    //get et set
+
+    public UDPrecever getUdpr(){
+        return this.udpr;
+    }
+
+    public void setUdpr(UDPrecever udpr) {
+        this.udpr = udpr;
+    }
+
+    public UDPsender getudps(){
+        return this.udps;
+    }
+
+    public void setUdps(UDPsender udps){
+        this.udps = udps;
+    }
+
+    public user getuser(){
+        return this.userlocal;
+    }
+
+    public void setuser(user usernew){
+        this.userlocal=usernew;
     }
 }
-

@@ -4,13 +4,12 @@ import model.contact.etat;
 
 import javax.swing.*;
 import java.net.InetAddress;
-import java.nio.file.*;
+
 
 
 public class user {
     private contact userlocal;
     private DefaultListModel<contact> userlist;
-    private Path localog;
 
     public user(contact userlocal){
         this.userlocal=userlocal;
@@ -18,6 +17,8 @@ public class user {
         this.userlocal.setuseretat(etat.DISCONNECTED);
 
     }
+
+
 
     public contact getUserlocal(){
         return userlocal;
