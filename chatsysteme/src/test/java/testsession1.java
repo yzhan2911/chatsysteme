@@ -1,15 +1,20 @@
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+
 import controller.controller;
+import controller.controllerDecouvert;
+import model.user;
+import model.contact.contact;
 import protocols.*;
 public class testsession1 {
-public static void main(String[] args){
+public static void main(String[] args) throws UnknownHostException, InterruptedException{
         UDPsender udps = new UDPsender();
         UDPrecever udpr = new UDPrecever(1129); 
-        controller app = new controller(null, udpr, udps);
+        user userlocal = new  user(new contact("yu", InetAddress.getByName("10.10.10.1")));
+        controller app =new controller(userlocal, udpr, udps);
+        controllerDecouvert decou = new controllerDecouvert(app);
+        decou.connexion(1129);
 
-        
-        udpr.start();
-        udps.sendBroadcast("client",1129);
-        System.out.println("[SERVER] Broadcast envoyé");
-    }
-     
+        udpr.stopReceiver();
+}
 }
