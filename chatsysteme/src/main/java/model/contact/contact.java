@@ -18,7 +18,7 @@ public class contact {
 
 public String toString(){
 
-    return this.getUserName()+":"+this.getUserName();
+    return this.getUserName()+" : "+this.getUserName() + " , " + this.getUserIP();
 }
 
 public void setUserName(String name){
