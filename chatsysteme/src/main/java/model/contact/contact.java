@@ -6,42 +6,42 @@ import java.net.InetAddress;
 public class contact { 
     private String username;
     private InetAddress userip;
-    private etat useretat;
+    private etat userEtat;
 
     public contact(String username,InetAddress userip)
     {
         this.username=username;
         this.userip=userip;
-        this.useretat=etat.DISCONNECTED;
+        this.userEtat=etat.DISCONNECTED;
     }   
     
 
 public String toString(){
 
-    return this.getusername()+":"+this.getuserip();
+    return this.getUserName()+":"+this.getUserName();
 }
 
-public void setusername(String name){
+public void setUserName(String name){
     this.username=name;
 }
 
-public void setuserip(InetAddress ip){
+public void setUserIP(InetAddress ip){
     this.userip=ip;
 }
 
-public void setuseretat(etat etat){
-    this.useretat=etat;
+public void setUserEtat(etat etat){
+    this.userEtat=etat;
 }
-public InetAddress getuserip() {
+public InetAddress getUserIP() {
     return this.userip;
 }
 
-public  String getusername() {
+public  String getUserName() {
     return this.username;
 }
 
-public etat getuseretat(){
-    return this.useretat;
+public etat getUserEtat(){
+    return this.userEtat;
 }
 }
 

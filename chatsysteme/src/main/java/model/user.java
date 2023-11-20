@@ -14,7 +14,7 @@ public class user {
     public user(contact userlocal){
         this.userlocal=userlocal;
         this.userlist= new DefaultListModel<contact>();
-        this.userlocal.setuseretat(etat.DISCONNECTED);
+        this.userlocal.setUserEtat(etat.DISCONNECTED);
 
     }
 
@@ -32,7 +32,7 @@ public class user {
         contact use=null;
         for (int i=0; i<this.userlist.getSize();i++){
             use = this.userlist.getElementAt(i);
-            if(use.getuserip().equals(userajout.getuserip())){
+            if(use.getUserIP().equals(userajout.getUserIP())){
                 return;
             }
 
@@ -45,7 +45,7 @@ public class user {
         contact use=null;
         for (int i=0; i<this.userlist.getSize();i++){
             use = this.userlist.getElementAt(i);
-            if(use.getuserip().equals(useraremo.getuserip())){
+            if(use.getUserIP().equals(useraremo.getUserIP())){
                 this.userlist.removeElementAt(i);
             }
 
@@ -57,7 +57,7 @@ public class user {
         contact use=null;
         for(int i=0;i<this.userlist.getSize();i++){
             use=this.userlist.getElementAt(i);
-            if(use.getusername().equals(username)){
+            if(use.getUserName().equals(username)){
                 return  use;
             }
         }
@@ -68,7 +68,7 @@ public class user {
         contact use=null;
         for(int i=0;i<this.userlist.getSize();i++){
             use=this.userlist.getElementAt(i);
-            if(use.getuserip().equals(ipad)){
+            if(use.getUserIP().equals(ipad)){
                 return  use;
             }
         }

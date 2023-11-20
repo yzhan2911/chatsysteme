@@ -17,27 +17,27 @@ public class controller {
 
     //get et set
 
-    public UDPrecever getUdpr(){
+    public UDPrecever getUDPr(){
         return this.udpr;
     }
 
-    public void setUdpr(UDPrecever udpr) {
+    public void setUDPr(UDPrecever udpr) {
         this.udpr = udpr;
     }
 
-    public UDPsender getudps(){
+    public UDPsender getUDPs(){
         return this.udps;
     }
 
-    public void setUdps(UDPsender udps){
+    public void setUDPs(UDPsender udps){
         this.udps = udps;
     }
 
-    public user getuser(){
+    public user getUser(){
         return this.userlocal;
     }
 
-    public void setuser(user usernew){
+    public void setUser(user usernew){
         this.userlocal=usernew;
     }
 }

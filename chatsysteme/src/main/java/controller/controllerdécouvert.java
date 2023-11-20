@@ -9,34 +9,35 @@ import protocols.*;
 
 import javax.swing.DefaultListModel;
 
-public class controllerdécouvert {
+public class controllerDécouvert {
     private  controller app;
     private UDPrecever udpr;
     private UDPsender udps;
     private DefaultListModel<contact> friendlist;
-    public controllerdécouvert(controller app){
+
+    public controllerDécouvert(controller app){
         this.app=app;
-        this.udpr=app.getUdpr();
-        this.udps=app.getudps();
-        friendlist= app.getuser().getUserlist();
+        this.udpr=app.getUDPr();
+        this.udps=app.getUDPs();
+        this.friendlist= app.getUser().getUserlist();
         
     }
 
 
-    public  controller getcontroller(){
+    public  controller getController(){
         return app;
     }
-    public void setcontrpller(controller app){
+    public void setController(controller app){
         this.app=app;
     }
-    public void envoyermessagedecouvert(String username, int port){
+    public void envoyerMessageDecouvert(String username, int port){
         udps.sendBroadcast("DECOUVERTE_"+username, port);
     }
     public boolean connexion(int port) throws InterruptedException{
         udpr.start();
-        udps.sendBroadcast("Connection_"+getcontroller().getuser().getUserlocal(),port );
+        udps.sendBroadcast("Connection_"+getController().getUser().getUserlocal(),port );
         Thread.sleep(2000);
-        app.getuser().getUserlocal().setuseretat(etat.CONNECTED);
+        app.getUser().getUserlocal().setUserEtat(etat.CONNECTED);
     
         return true;
     }

@@ -22,8 +22,8 @@ public class UDPrecever extends Thread {
         }
     }
 
-    public void répondreaumessagedecouvert(String message,contact user,InetAddress addressDes,int port) {
-        String reponse="REPONSE_"+user.getusername()+user.getuserip()+user.getuseretat();
+    public void RépondreAuMessageDecouvert(contact user,InetAddress addressDes,int port) {
+        String reponse="REPONSE_"+user.getUserName()+"_"+user.getUserIP()+""+user.getUserEtat();
         byte[] buffer= reponse.getBytes();
         try(DatagramSocket socket = new DatagramSocket()){
             DatagramPacket packet = new DatagramPacket(buffer, buffer.length, addressDes, port);
@@ -50,7 +50,7 @@ public class UDPrecever extends Thread {
 
                 // user ajouter
                 if (receivedMessage.startsWith("DECOUVERTE_")){
-                    répondreaumessagedecouvert(receivedMessage, app.getuser().getUserlocal(), addressSource, port);
+                    RépondreAuMessageDecouvert( app.getUser().getUserlocal(), addressSource, port);
                 }else if (receivedMessage.startsWith("REPONSE_")){
                     String[] parts = receivedMessage.split("_");
                     if (parts.length>=4 && parts[0].equals("REPONSE")){
@@ -58,8 +58,8 @@ public class UDPrecever extends Thread {
                         InetAddress ip = InetAddress.getByName(parts[2]);
                         etat etatuser=etat.valueOf(parts[3]);
                         contact useradd = new contact(name, ip);
-                        useradd.setuseretat(etatuser);
-                        app.getuser().adduser(useradd);
+                        useradd.setUserEtat(etatuser);
+                        app.getUser().adduser(useradd);
                     } 
                     else {
                         System.out.println("error de decouvert");
