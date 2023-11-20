@@ -5,8 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4fd17f6-44c1-4595-9b2c-968a415e0595" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ChatApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChatApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/controllerDecouvert.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/controllerDecouvert.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/protocols/UDPrecever.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/protocols/UDPrecever.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/testsession1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/testsession1.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,8 +29,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": -1
+  "associatedIndex": 5
 }]]></component>
   <component name="ProjectId" id="2XA2Av3qwwZNe7RiXo7zIw6ZaCF" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -41,7 +42,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/yzhang5/4IR/Chat_système",
+    "last_opened_file_path": "/home/yzhang5/4IR/Chat_système/chatsystem-zeng-zhang/chatsysteme",
     "onboarding.tips.debug.path": "/home/yzhang5/4IR/Chat_système/chatsystem-zeng-zhang/chatsysteme/src/main/java/org/example/Main.java"
   }
 }]]></component>

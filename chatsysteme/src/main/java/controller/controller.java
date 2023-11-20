@@ -8,9 +8,9 @@ public class controller {
     private UDPrecever udpr;
     private UDPsender udps;
 
-    public controller(user userlocal,UDPrecever udpr,UDPsender udps){
+    public controller(user userlocal,UDPsender udps,int port){
         this.userlocal=userlocal;
-        this.udpr=udpr;
+        this.udpr= new UDPrecever(port, this);
         this.udps=udps;
     }
 
