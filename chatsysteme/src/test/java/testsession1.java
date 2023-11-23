@@ -10,15 +10,13 @@ import model.user;
 import model.contact.contact;
 import protocols.*;
 public class testsession1 extends TestCase{
+  public static final int PORT_DISCOVERY = 1929;
     @Test 
     public void testdecouvert() throws UnknownHostException, InterruptedException{
-             UDPsender udps = new UDPsender();
-             UDPrecever udpr = new UDPrecever(1929);
-            user userlocal = new  user(new contact("yu", InetAddress.getByName("10.10.10.2")));
-             controller app =new controller(userlocal, udps,udpr);
-            controllerDecouvert decou = new controllerDecouvert(app);
-            decou.connexion(1129);
+        user userlocal = new  user(new contact("yuu5452", InetAddress.getLocalHost()));
+        controller app =new controller(userlocal, new UDPsender(), PORT_DISCOVERY);
+       
+        controllerDecouvert decou = new controllerDecouvert(app);
+        decou.connexion(PORT_DISCOVERY);    
   }
-
-
 }

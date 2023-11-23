@@ -79,21 +79,21 @@ public class UDPrecever extends Thread {
                         System.out.println("Rucu le message REPONSE et traite les données");
                         String[] parts = receivedMessage.split("_");
                         if (parts.length>=4 && parts[0].equals("REPONSE")){
-                             System.out.println("before ");
+                            
                             String name = parts[1];
-                             System.out.println("1");
-                            InetAddress ip = InetAddress.getByName(parts[2]);
-                             System.out.println("2");
+                 
+                            String ipAddressString = parts[2].substring(parts[2].indexOf("/") + 1);
+                            InetAddress ip = InetAddress.getByName(ipAddressString);
+                        
                             etat etatuser=etat.valueOf(parts[3]);
-                             System.out.println("3");
+        
                             contact useradd = new contact(name, ip);
-                             System.out.println("5");
+                     
                             useradd.setUserEtat(etatuser);
-                             System.out.println("6");
+               
                             app.getUser().adduser(useradd);
                             System.out.println("bien connexion");
                             System.out.println(this.app.getUser().getUserlist());
-                             System.out.println("after");
                         } 
                         else {
                             System.out.println("error de decouvert");
