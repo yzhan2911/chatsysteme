@@ -70,11 +70,39 @@ public class UDPrecever extends Thread {
                 // Traitement du paquet reçu
                     String receivedMessage = new String(datagramPacket.getData(), 0, datagramPacket.getLength());
                     System.out.println("Message new UDPrecever(PORT_DISCOVERY) reçu : " + receivedMessage);
-               
-                // user ajouter
-                    if (receivedMessage.startsWith("DECOUVERTE_")){
+                    if(receivedMessage.startsWith("DECONNECT")){
+                        String[] parts = receivedMessage.split("_");
+                        String name = parts[1];
+                 
+                        String ipAddressString = parts[2].substring(parts[2].indexOf("/") + 1);
+                        InetAddress ip = InetAddress.getByName(ipAddressString);
+        
+                        contact useremo = new contact(name, ip);
+                       
+                        this.app.getUser().removeuser(useremo);
+                       
+
+                    }// user ajouter
+                    else if (receivedMessage.startsWith("DECOUVERTE_")){
                         System.out.println("Répond_au_message DECOUVERTE");
+                        String[] parts2 = receivedMessage.split("_");
+                        if (parts2.length>=4){
+                            
+                            String name = parts2[1];
+                 
+                            String ipAddressString = parts2[2].substring(parts2[2].indexOf("/") + 1);
+                            InetAddress ip = InetAddress.getByName(ipAddressString);
+                        
+                            etat etatuser=etat.valueOf(parts2[3]);
+        
+                            contact useradd = new contact(name, ip);
+                     
+                            useradd.setUserEtat(etatuser);
+               
+                            app.getUser().adduser(useradd);
+                        }
                         RépondreAuMessageDecouvert( this.app.getUser().getUserlocal(), addressSource, port);
+                        
                     }else if(receivedMessage.startsWith("REPONSE_")) {
                         System.out.println("Rucu le message REPONSE et traite les données");
                         String[] parts = receivedMessage.split("_");

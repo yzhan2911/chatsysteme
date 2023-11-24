@@ -9,45 +9,44 @@ import javax.swing.*;
 
 import model.user;
 import model.contact.contact;
+import controller.controllerDecouvert;
 
 public class ChatPage  {
+
+    public static final int PORT_DISCOVERY = 1929;
+    
+    private controllerDecouvert appdecou;
+    private user user;
     private String username;
-    private String adresse;
+    private InetAddress adresse;
     private DefaultListModel<contact> listFriend; 
 
-    public ChatPage(String username, String adresse) {
-       this.username=username;
-       this.adresse=adresse;
-       this.listFriend = new DefaultListModel<>(); // Initialisation du modèle de liste;
-       populateList(); 
+    public ChatPage(controllerDecouvert appdecou) {
+        this.appdecou=appdecou;
+        this.user=appdecou.getController().getUser();
+       this.username=this.user.getUserlocal().getUserName();
+       this.adresse=this.user.getUserlocal().getUserIP();
+       this.listFriend = this.user.getUserlist(); // Initialisation du modèle de liste; 
        PagePrincipal();
     }
 
-    //just pour test de afficher le list friends
-    private void populateList() {
-        try {
-            contact p1 = new contact("zy", InetAddress.getByName("10.10.10.1"));
-            contact p2 = new contact("zyj", InetAddress.getByName("10.10.10.2"));
-            listFriend.addElement(p1);
-            listFriend.addElement(p2);
-        } catch (UnknownHostException ex) {
-            ex.printStackTrace();
-        }
-    }
+
 
     public void PagePrincipal(){
         JFrame frame = new JFrame("Chat");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //zone info personnelle
-        JPanel infoPanel = new JPanel(new GridLayout(2, 2)); // GridLayout with 2 rangs, 2 colonnes
+        JPanel infoPanel = new JPanel(new GridLayout(2, 3)); // GridLayout with 2 rangs, 2 colonnes
 
         JLabel usernameLabel = new JLabel("UserName:"+ this.username);
         JButton changeUsername=new JButton("Change Nickname");
+        JButton deconneButton=new JButton("deconnection");
         JLabel adresseLabel = new JLabel("Adresse:"+this.adresse);
 
         infoPanel.add(usernameLabel);
         infoPanel.add(changeUsername);
+        infoPanel.add(deconneButton);
         infoPanel.add(adresseLabel);
         infoPanel.add(new JLabel());
        
@@ -56,9 +55,21 @@ public class ChatPage  {
             //JOptionPane:une boîte de dialogue modale pour demander de saisir le nouveau pseudonyme
             String newUsername = JOptionPane.showInputDialog(frame, "Nouveau pseudonyme:");
             if (newUsername != null && !newUsername.isEmpty()) {
-                username = newUsername;
+                this.username = newUsername;
                 usernameLabel.setText("UserName: " + username);
+                
             }
+        });
+
+        deconneButton.addActionListener(e->{
+           try {
+            this.appdecou.deconnexion(PORT_DISCOVERY);
+            frame.dispose();
+        } catch (InterruptedException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
         });
 
 
