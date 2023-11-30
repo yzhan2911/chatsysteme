@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="c4fd17f6-44c1-4595-9b2c-968a415e0595" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/ChatApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ChatApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/controllerDecouvert.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/controllerDecouvert.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/protocols/UDPrecever.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/protocols/UDPrecever.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/testsession1.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/testsession1.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,9 +25,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 5
-}]]></component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 5
+}</component>
   <component name="ProjectId" id="2XA2Av3qwwZNe7RiXo7zIw6ZaCF" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -42,20 +39,13 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "/home/yzhang5/4IR/Chat_système/chatsystem-zeng-zhang/chatsysteme",
+    "last_opened_file_path": "/home/yzhang5/4IR/chatsystem-zeng-zhang",
     "onboarding.tips.debug.path": "/home/yzhang5/4IR/Chat_système/chatsystem-zeng-zhang/chatsysteme/src/main/java/org/example/Main.java"
   }
 }]]></component>
   <component name="RunManager">
     <configuration default="true" type="JetRunConfigurationType">
       <module name="chatsysteme" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="chatsysteme" />
-      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
