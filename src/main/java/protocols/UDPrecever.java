@@ -26,7 +26,7 @@ public class UDPrecever extends Thread {
         }
     }
 
-    public void RépondreAuMessageDecouvert(contact user,InetAddress addressDes,int port) {
+    public synchronized void RépondreAuMessageDecouvert(contact user,InetAddress addressDes,int port) {
         String reponse="REPONSE_"+user.getUserName()+"_"+user.getUserIP()+"_"+user.getUserEtat();
 
         byte[] buffer= reponse.getBytes();
@@ -147,7 +147,7 @@ public class UDPrecever extends Thread {
         return !this.stop;
     }
 
-    public void setController(controller app){
+    public synchronized void setController(controller app){
         this.app=app;
     }
     public void stopReceiver() {

@@ -36,7 +36,7 @@ public class UDPsender {
     }
 
     // Méthode pour lister toutes les adresses de broadcast
-    public static List<InetAddress> listAllBroadcastAddresses() throws SocketException {
+    /*public static List<InetAddress> listAllBroadcastAddresses() throws SocketException {
         List<InetAddress> broadcastList = new ArrayList<>();
         Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
         while (interfaces.hasMoreElements()) {
@@ -53,7 +53,7 @@ public class UDPsender {
         }
         return broadcastList;
     }
-
+*/
     // Fermer la connexion
     public void closeConnection() {
         if (!socket.isClosed()) {

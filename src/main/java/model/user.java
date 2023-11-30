@@ -24,11 +24,11 @@ public class user {
         return userlocal;
     }
 
-    public DefaultListModel<contact> getUserlist() {
+    public synchronized DefaultListModel<contact> getUserlist() {
         return userlist;
     }
 
-    public void adduser(contact userajout){
+    public synchronized void adduser(contact userajout){
         contact use=null;
         for (int i=0; i<this.userlist.getSize();i++){
             use = this.userlist.getElementAt(i);
@@ -41,7 +41,7 @@ public class user {
         System.out.println("[Model] List of user: "+this.userlist.toString());
     }
 
-    public void removeuser(contact useraremo){
+    public synchronized void removeuser(contact useraremo){
         contact use=null;
         for (int i=0; i<this.userlist.getSize();i++){
             use = this.userlist.getElementAt(i);
