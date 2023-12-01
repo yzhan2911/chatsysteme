@@ -22,12 +22,12 @@ public class ChatPage  {
         this.user=appdecou.getController().getUser();
         this.username=this.user.getUserlocal().getUserName();
         this.adresse=this.user.getUserlocal().getUserIP();
-        //this.listFriend = this.user.getUserlist();  
+        this.listFriend = this.user.getUserlist();
         //pour tester
-        this.listFriend = new DefaultListModel<>(); 
-        this.listFriend.addElement(new contact("ZY", adresse));
-        this.listFriend.addElement(new contact("GJJ", adresse));
-        this.listFriend.addElement(new contact("Bob", adresse));
+        //this.listFriend = new DefaultListModel<>();
+        //this.listFriend.addElement(new contact("ZY", adresse));
+        //this.listFriend.addElement(new contact("GJJ", adresse));
+        //this.listFriend.addElement(new contact("Bob", adresse));
         PagePrincipal();
     }
 
@@ -56,8 +56,9 @@ public class ChatPage  {
             //JOptionPane:une boîte de dialogue modale pour demander de saisir le nouveau pseudonyme
             String newUsername = JOptionPane.showInputDialog(frame, "Nouveau pseudonyme:");
             if (newUsername != null && !newUsername.isEmpty()) {
-                this.username = newUsername;
-                usernameLabel.setText("UserName: " + username);
+                this.user.getUserlocal().setUserName(newUsername);
+
+                usernameLabel.setText("UserName: " + this.user.getUserlocal().getUserName());
             }
         });
 

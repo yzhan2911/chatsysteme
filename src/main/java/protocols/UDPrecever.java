@@ -43,7 +43,6 @@ public class UDPrecever extends Thread {
     public void run() {
         int port =socket.getLocalPort();
         System.out.println("[UDPReceiver] Démarré et en écoute sur le port " + port);
-        System.out.println(this.stop);
         while (!this.stop) {
             try {
                 byte[] buffer = new byte[1024 ]; // Taille du buffer pour les paquets entrants

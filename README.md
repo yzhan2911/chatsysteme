@@ -1,14 +1,11 @@
-# ~~Burn~~ Replace with your own after reading
+[[[BLUID]]]
 
-This private repository is created for you so that your teachers have access to it.
+"mvn compile" -----for compiler
 
-## Identify yourself
 
-Before anything, **complete the `metadata.yml` with your own information.** 
+[[[RUN]]]
+" mvn exec:java -Dexec.mainClass="ChatApplication " -----for run
 
-This is the file that we will use to identify the teacher responsible for the repository and assign the grades to the participating students.
-
-## Take ownership
 
 As long as you make sure to keep the `metadata.yml` file at the root of this repository, you are free to do anything. Our suggestion would be to have it organized into something like the following:
 
@@ -23,4 +20,4 @@ As long as you make sure to keep the `metadata.yml` file at the root of this rep
       uml/
       report.pdf
 
-In particular, you will soon have to replace this README with something that describes your own project.
+In particular, you will soon have to replace this README wit~~h something that describes your own project.
