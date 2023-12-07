@@ -33,14 +33,12 @@ public class controllerDecouvert {
     }
     public void connexion(int port) throws InterruptedException{
         this.udpr.start();
-        Thread.sleep(1000);
         System.out.println("sending Conection_broadcast");
         this.udps.sendBroadcast("DECOUVERTE_"+getController().getUser().getUserlocal().getUserName()+"_"+getController().getUser().getUserlocal().getUserIP()+"_"+getController().getUser().getUserlocal().getUserEtat(),port );
         Thread.sleep(1000);
         this.app.getUser().getUserlocal().setUserEtat(etat.CONNECTED);
     }
     public void deconnexion(int port) throws InterruptedException{
-        Thread.sleep(1000);
         System.out.println("sending DECONNECTION_broadcast");
         this.udps.sendBroadcast("DECONNECT_"+getController().getUser().getUserlocal().getUserName()+"_"+getController().getUser().getUserlocal().getUserIP(),port) ;
         Thread.sleep(1000);
