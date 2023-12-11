@@ -21,6 +21,7 @@ public class Connexion  {
     public Connexion() throws UnknownHostException{
         JFrame frame = new JFrame("Log in!");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
 
         JPanel mainPanel = new JPanel(new GridLayout(2, 2)); 
         JLabel adresseLabel = new JLabel("Adresse:");

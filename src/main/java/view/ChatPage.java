@@ -24,10 +24,9 @@ public class ChatPage  {
         this.adresse=this.user.getUserlocal().getUserIP();
         this.listFriend = this.user.getUserlist();
         //pour tester
-        //this.listFriend = new DefaultListModel<>();
-        //this.listFriend.addElement(new contact("ZY", adresse));
-        //this.listFriend.addElement(new contact("GJJ", adresse));
-        //this.listFriend.addElement(new contact("Bob", adresse));
+        this.listFriend.addElement(new contact("ZY", adresse));
+        this.listFriend.addElement(new contact("GJJ", adresse));
+        this.listFriend.addElement(new contact("Bob", adresse));
         PagePrincipal();
     }
 
@@ -36,10 +35,13 @@ public class ChatPage  {
     public void PagePrincipal(){
         JFrame frame = new JFrame("Chat");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 300);
+        frame.setLocationRelativeTo(null);
+        frame.setLayout(new BorderLayout());
 
         //zone info personnelle
         JPanel infoPanel = new JPanel(new GridLayout(2, 2)); // GridLayout with 2 rangs, 2 colonnes
-        //infoPanel.setBackground(Color.LIGHT_GRAY);
+        infoPanel.setBackground(Color.LIGHT_GRAY);
         JLabel usernameLabel = new JLabel("UserName:"+ this.username);
         JLabel adresseLabel = new JLabel("Adresse:"+this.adresse);
         JButton changeUsername=new JButton("Change Nickname");
@@ -51,6 +53,7 @@ public class ChatPage  {
         infoPanel.add(adresseLabel);
         infoPanel.add(deconneButton);
        
+
         //changer le nickname
         changeUsername.addActionListener(e -> {
             //JOptionPane:une boîte de dialogue modale pour demander de saisir le nouveau pseudonyme
@@ -62,6 +65,7 @@ public class ChatPage  {
             }
         });
 
+
         //Deconnecter
         deconneButton.addActionListener(e->{
            try {
@@ -72,15 +76,6 @@ public class ChatPage  {
             e1.printStackTrace();
         }
         });
-
-        JPanel renouvellerJPanel=new JPanel();
-        JButton renouvellerButton=new JButton();
-        ImageIcon imageIconRenouveller=new ImageIcon("//home/yzhang5/Téléchargements/renouveller.png");
-        Image imageRenouveller=imageIconRenouveller.getImage();
-        Image resizedImage=imageRenouveller.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
-        ImageIcon resizedIcon=new ImageIcon(resizedImage);
-        renouvellerButton.setIcon(resizedIcon);
-        renouvellerJPanel.add(renouvellerButton);
        
 
         //zone list de friends
@@ -88,23 +83,27 @@ public class ChatPage  {
         listFriendPanel.setBackground(Color.WHITE);
         
         JLabel listFriendJLabel = new JLabel("  List Friend: ");
-        
        
-
+        //un boutton renouvller le list
+        JButton renouvellerButton=new JButton();
+        renouvellerButton.setText("renouveller List ");
+        ImageIcon renouvellerIcon=resizeImageIconFromURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo-sqzTj9yUuS8qP5oAQ0Tc2apn4YZZuSaIhlNnzTEuQzTGeNmCN2KrCerJt3FPP4dK68&usqp=CAU",30,30);
+        renouvellerButton.setIcon(renouvellerIcon);
+        renouvellerButton.addActionListener(e -> {
+                System.out.println("bien renouveller le list");
+                frame.dispose();
+                SwingUtilities.invokeLater(() -> new ChatPage(this.appdecou));
+        });
 
         listFriendPanel.add(listFriendJLabel);
-        listFriendPanel.add(new JLabel());
- 
-
-        //JList<contact> contactsList = new JList<>(listFriend);       //n'affiche que infos des friends
-        //listFriendPanel.add(new JScrollPane(contactsList), BorderLayout.CENTER);
-
+        listFriendPanel.add(renouvellerButton);
+        
         for (int i = 0; i < listFriend.getSize(); i++) {
             contact currentContact = listFriend.getElementAt(i);
     
             JButton contactButton = new JButton();
             contactButton.setText(currentContact.getUserName()+" : "+currentContact.getUserIP());
-            ImageIcon icon = new ImageIcon("/home/yzhang5/Téléchargements/frank.png");
+            ImageIcon icon=resizeImageIconFromURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUuljTu0ME5vw04dWtw_ra0GUXSusHwID3dQWXvu1hM7cXqCGKG7uFmYPhw8QvKcPZdNM&usqp=CAU",50,50);
             contactButton.setIcon(icon);
     
             contactButton.addActionListener(e -> {
@@ -114,17 +113,25 @@ public class ChatPage  {
 
             listFriendPanel.add(contactButton);
         }
-       
 
-        // frame.setLayout(new BorderLayout());
         frame.add(infoPanel,BorderLayout.NORTH);
-        frame.add(renouvellerJPanel,BorderLayout.SOUTH);
         frame.add(listFriendPanel,BorderLayout.CENTER);
-        // frame.add(myButton,BorderLayout.SOUTH);
-        // frame.add(testLabel,BorderLayout.SOUTH);
 
         frame.pack();
         frame.setVisible(true);
+    }
+    
+    public ImageIcon resizeImageIconFromURL(String urlString,int width,int height){
+        try {
+            URL url = new URL(urlString);
+            ImageIcon imageIcon = new ImageIcon(url);
+            Image image = imageIcon.getImage();
+            Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+            return new ImageIcon(resizedImage);
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 
