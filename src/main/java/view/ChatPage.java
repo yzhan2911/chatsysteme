@@ -73,14 +73,29 @@ public class ChatPage  {
         }
         });
 
+        JPanel renouvellerJPanel=new JPanel();
+        JButton renouvellerButton=new JButton();
+        ImageIcon imageIconRenouveller=new ImageIcon("//home/yzhang5/Téléchargements/renouveller.png");
+        Image imageRenouveller=imageIconRenouveller.getImage();
+        Image resizedImage=imageRenouveller.getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon=new ImageIcon(resizedImage);
+        renouvellerButton.setIcon(resizedIcon);
+        renouvellerJPanel.add(renouvellerButton);
+       
 
         //zone list de friends
         JPanel listFriendPanel = new JPanel(new GridLayout(listFriend.getSize() + 1,2));
         listFriendPanel.setBackground(Color.WHITE);
         
         JLabel listFriendJLabel = new JLabel("  List Friend: ");
+        
+       
+
+
         listFriendPanel.add(listFriendJLabel);
-        listFriendJLabel.add(new JLabel());
+        listFriendPanel.add(new JLabel());
+ 
+
         //JList<contact> contactsList = new JList<>(listFriend);       //n'affiche que infos des friends
         //listFriendPanel.add(new JScrollPane(contactsList), BorderLayout.CENTER);
 
@@ -89,7 +104,7 @@ public class ChatPage  {
     
             JButton contactButton = new JButton();
             contactButton.setText(currentContact.getUserName()+" : "+currentContact.getUserIP());
-            ImageIcon icon = new ImageIcon("/Users/yongjiazeng/Desktop/hhhhh.png");
+            ImageIcon icon = new ImageIcon("/home/yzhang5/Téléchargements/frank.png");
             contactButton.setIcon(icon);
     
             contactButton.addActionListener(e -> {
@@ -103,6 +118,7 @@ public class ChatPage  {
 
         // frame.setLayout(new BorderLayout());
         frame.add(infoPanel,BorderLayout.NORTH);
+        frame.add(renouvellerJPanel,BorderLayout.SOUTH);
         frame.add(listFriendPanel,BorderLayout.CENTER);
         // frame.add(myButton,BorderLayout.SOUTH);
         // frame.add(testLabel,BorderLayout.SOUTH);
