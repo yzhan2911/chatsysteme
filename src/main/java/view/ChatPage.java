@@ -87,7 +87,8 @@ public class ChatPage  {
         //un boutton renouvller le list
         JButton renouvellerButton=new JButton();
         renouvellerButton.setText("renouveller List ");
-        ImageIcon renouvellerIcon=resizeImageIconFromURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo-sqzTj9yUuS8qP5oAQ0Tc2apn4YZZuSaIhlNnzTEuQzTGeNmCN2KrCerJt3FPP4dK68&usqp=CAU",30,30);
+        ImageIcon renouvellerIcon=resizeImageIconFromURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo-sqzTj9yUuS8qP5oAQ0Tc2apn4YZZuSaIhlNnzTEuQzTGeNmCN2KrCerJt3FPP4dK68&usqp=CAU"
+                                                            ,30,30);
         renouvellerButton.setIcon(renouvellerIcon);
         renouvellerButton.addActionListener(e -> {
                 System.out.println("bien renouveller le list");
@@ -103,7 +104,8 @@ public class ChatPage  {
     
             JButton contactButton = new JButton();
             contactButton.setText(currentContact.getUserName()+" : "+currentContact.getUserIP());
-            ImageIcon icon=resizeImageIconFromURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUuljTu0ME5vw04dWtw_ra0GUXSusHwID3dQWXvu1hM7cXqCGKG7uFmYPhw8QvKcPZdNM&usqp=CAU",50,50);
+            ImageIcon icon=resizeImageIconFromURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUuljTu0ME5vw04dWtw_ra0GUXSusHwID3dQWXvu1hM7cXqCGKG7uFmYPhw8QvKcPZdNM&usqp=CAU"
+                                                                ,50,50);
             contactButton.setIcon(icon);
     
             contactButton.addActionListener(e -> {
@@ -121,7 +123,7 @@ public class ChatPage  {
         frame.setVisible(true);
     }
     
-    public ImageIcon resizeImageIconFromURL(String urlString,int width,int height){
+    public static ImageIcon resizeImageIconFromURL(String urlString,int width,int height){
         try {
             URL url = new URL(urlString);
             ImageIcon imageIcon = new ImageIcon(url);
