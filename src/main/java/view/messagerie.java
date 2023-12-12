@@ -3,6 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -22,7 +24,7 @@ public class messagerie {
     
     public messagerie(user user, contact currentContact) {
         frame = new JFrame(currentContact.getUserName());
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//ici a modifier
         frame.setSize(400, 300);
         frame.setLocationRelativeTo(null);
 
@@ -65,7 +67,8 @@ public class messagerie {
     private void sendMessage() {
         String message = messageField.getText();
         if (!message.isEmpty()) {
-            appendToChatHistory("Moi: " + message);
+            String formattedMessage = getFormattedTimestamp() + " Moi: " + message;
+            appendToChatHistory(formattedMessage);
             messageField.setText(""); // Effacer le champ de texte après l'envoi
         }
     }
@@ -73,6 +76,12 @@ public class messagerie {
     private void appendToChatHistory(String message) {
         chatHistoryArea.append(message + "\n");
     }
-
+    
+    //message horodatés
+    private String getFormattedTimestamp() {
+        Date now = new Date(); // Obtient la date et l'heure actuelles
+        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss"); // Format de l'heure (modifiable selon vos besoins)
+        return "[" + dateFormat.format(now) + "]";
+    }
 
 }

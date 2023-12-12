@@ -84,6 +84,7 @@ public class Connexion  {
         loginButton.addActionListener(e->{
             String username=usernameField.getText();
             try {
+                //ameliorer la structutr a faire
                 user userlocal = new  user(new contact(username, InetAddress.getLocalHost()));
                 controller app =new controller(userlocal, new UDPsender(), PORT_DISCOVERY);
                 controllerDecouvert decou = new controllerDecouvert(app);
