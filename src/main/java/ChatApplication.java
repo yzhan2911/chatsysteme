@@ -1,15 +1,7 @@
 
-
-import model.user;
-import model.contact.contact;
-import protocols.UDPrecever;
-import protocols.UDPsender;
-
-import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import controller.controller;
-import controller.controllerDecouvert;
+
 import view.Connexion;
 
 public class ChatApplication {

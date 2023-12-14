@@ -121,15 +121,21 @@ public class UDPrecever extends Thread {
                             app.getUser().adduser(useradd);
                             System.out.println("bien connexion");
                             System.out.println(this.app.getUser().getUserlist());
-                        } 
+                        }
                         else {
                             System.out.println("error de decouvert");
                         }
-                    
-                    Thread.sleep(1000);
+                    }else if(receivedMessage.startsWith("CHANGEDNAME")){
+
+                        String[] parts = receivedMessage.split("_");
+                        String newname = parts[1];
+                 
+                        String ipAddressString = parts[2].substring(parts[2].indexOf("/") + 1);
+                        InetAddress ip = InetAddress.getByName(ipAddressString);
+                        this.app.getUser().getUserbyip(ip).setUserName(newname);
                     }
                 }
-            }catch (IOException | InterruptedException e) {
+            }catch (IOException e) {
                 if (this.stop) {
                     System.out.println("[UDPReceiver] Arrêt du thread UDPReceiver.");
                 } else {

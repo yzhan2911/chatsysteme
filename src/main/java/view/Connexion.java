@@ -62,7 +62,7 @@ public class Connexion  {
         
         
 
-        JPanel mainPanel = new JPanel(new GridLayout(2, 2)); 
+        JPanel mainPanel = new JPanel(new GridLayout(3, 2)); 
         mainPanel.setOpaque(false); //panel en transparent
         JLabel adresseLabel = new JLabel("Adresse:");
         adresseLabel.setForeground(Color.white);//changer la couleur de JLabel
@@ -77,20 +77,27 @@ public class Connexion  {
         mainPanel.add(usernameLabel);
         mainPanel.add(usernameField);
 
-
+     
+        
         //button login
         JButton loginButton = new JButton("log in!");
         
         loginButton.addActionListener(e->{
             String username=usernameField.getText();
             try {
-                //ameliorer la structutr a faire
+            
                 user userlocal = new  user(new contact(username, InetAddress.getLocalHost()));
                 controller app =new controller(userlocal, new UDPsender(), PORT_DISCOVERY);
-                controllerDecouvert decou = new controllerDecouvert(app);
-                SwingUtilities.invokeLater(() -> new ChatPage(decou));
-                decou.connexion(PORT_DISCOVERY);    
+                controllerDecouvert decou = app.getConDecou();
+                decou.connexion(PORT_DISCOVERY); 
+                
+                // if (app.exist_nickname(username)){
+                //     errorNickname.setText("ce nale est deja existe!!!");
+                // }else{
+                SwingUtilities.invokeLater(() -> new ChatPage(app));
+                  
                 frame.dispose();
+                // }
             } catch (UnknownHostException | InterruptedException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();

@@ -16,7 +16,7 @@ public class testsession1 extends TestCase{
         user userlocal = new  user(new contact("yuu5452", InetAddress.getLocalHost()));
         controller app =new controller(userlocal, new UDPsender(), PORT_DISCOVERY);
        
-        controllerDecouvert decou = new controllerDecouvert(app);
+        controllerDecouvert decou = app.getConDecou();
         decou.connexion(PORT_DISCOVERY);    
   }
 }

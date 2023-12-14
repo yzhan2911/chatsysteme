@@ -52,7 +52,7 @@ public class user {
         }
         System.out.println("[Model] List of user: "+this.userlist.toString());
     }
-
+    
     public contact getUserbyname(String username){
         contact use=null;
         for(int i=0;i<this.userlist.getSize();i++){
@@ -75,8 +75,8 @@ public class user {
         return  use;
     }
 
-    public void removeall(){
+    /*public void removeall(){
         this.userlist.removeAllElements();
     }
-
+    */
 }

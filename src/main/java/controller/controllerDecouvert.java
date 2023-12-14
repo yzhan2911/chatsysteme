@@ -1,6 +1,6 @@
 package controller;
 
-import model.contact.contact;
+import model.user;
 import model.contact.etat;
 import protocols.*;
 
@@ -10,39 +10,33 @@ import protocols.*;
 
 
 public class controllerDecouvert {
-    private  controller app;
+    private  user user;
     private UDPrecever udpr;
     private UDPsender udps;
 
-    public controllerDecouvert(controller app){
-        this.app=app;
-        this.udpr=app.getUDPr();
-        this.udps=app.getUDPs();
+    public controllerDecouvert(user userlocal,UDPsender udps,UDPrecever udpr){
+        this.user=userlocal;
+        this.udps=udps;
+        this.udpr=udpr;
         
     }
 
+    public void UpdateChangeName(String newName,int port){
+        udps.sendBroadcast("CHANGEDNAME_"+newName+"_"+user.getUserlocal(), port);
+    }
 
-    public  controller getController(){
-        return app;
-    }
-    public void setController(controller app){
-        this.app=app;
-    }
-    public void envoyerMessageDecouvert(contact user, int port){
-        udps.sendBroadcast("DECOUVERTE_"+user.getUserName(), port);
-    }
     public void connexion(int port) throws InterruptedException{
         this.udpr.start();
         System.out.println("sending Conection_broadcast");
-        this.udps.sendBroadcast("DECOUVERTE_"+getController().getUser().getUserlocal().getUserName()+"_"+getController().getUser().getUserlocal().getUserIP()+"_"+getController().getUser().getUserlocal().getUserEtat(),port );
+        this.udps.sendBroadcast("DECOUVERTE_"+user.getUserlocal().getUserName()+"_"+user.getUserlocal().getUserIP()+"_"+user.getUserlocal().getUserEtat(),port );
         Thread.sleep(1000);
-        this.app.getUser().getUserlocal().setUserEtat(etat.CONNECTED);
+        this.user.getUserlocal().setUserEtat(etat.CONNECTED);
     }
     public void deconnexion(int port) throws InterruptedException{
         System.out.println("sending DECONNECTION_broadcast");
-        this.udps.sendBroadcast("DECONNECT_"+getController().getUser().getUserlocal().getUserName()+"_"+getController().getUser().getUserlocal().getUserIP(),port) ;
+        this.udps.sendBroadcast("DECONNECT_"+user.getUserlocal().getUserName()+"_"+user.getUserlocal().getUserIP(),port) ;
         Thread.sleep(1000);
-        this.app.getUser().getUserlocal().setUserEtat(etat.DISCONNECTED);
+        this.user.getUserlocal().setUserEtat(etat.DISCONNECTED);
         this.udpr.stopReceiver();
     }
 }

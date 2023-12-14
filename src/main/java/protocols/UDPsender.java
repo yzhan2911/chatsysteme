@@ -34,26 +34,6 @@ public class UDPsender {
             e.printStackTrace();
         }
     }
-
-    // Méthode pour lister toutes les adresses de broadcast
-    /*public static List<InetAddress> listAllBroadcastAddresses() throws SocketException {
-        List<InetAddress> broadcastList = new ArrayList<>();
-        Enumeration<NetworkInterface> interfaces = NetworkInterface.getNetworkInterfaces();
-        while (interfaces.hasMoreElements()) {
-            NetworkInterface networkInterface = interfaces.nextElement();
-
-            if (networkInterface.isLoopback() || !networkInterface.isUp()) {
-                continue;
-            }
-
-            networkInterface.getInterfaceAddresses().stream()
-                    .map(a -> a.getBroadcast())
-                    .filter(Objects::nonNull)
-                    .forEach(broadcastList::add);
-        }
-        return broadcastList;
-    }
-*/
     // Fermer la connexion
     public void closeConnection() {
         if (!socket.isClosed()) {

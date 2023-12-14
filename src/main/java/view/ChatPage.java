@@ -5,6 +5,7 @@ import java.net.*;
 import javax.swing.*;
 import model.user;
 import model.contact.contact;
+import controller.controller;
 import controller.controllerDecouvert;
 
 public class ChatPage  {
@@ -12,14 +13,17 @@ public class ChatPage  {
     public static final int PORT_DISCOVERY = 1929;
     
     private controllerDecouvert appdecou;
+    private controller app;
     private user user;
     private String username;
     private InetAddress adresse;
     private DefaultListModel<contact> listFriend; 
 
-    public ChatPage(controllerDecouvert appdecou) {
-        this.appdecou=appdecou;
-        this.user=appdecou.getController().getUser();
+    public ChatPage(controller app) {
+        this.app=app;
+        this.appdecou=app.getConDecou();
+
+        this.user=app.getUser();
         this.username=this.user.getUserlocal().getUserName();
         this.adresse=this.user.getUserlocal().getUserIP();
         this.listFriend = this.user.getUserlist();
@@ -39,29 +43,48 @@ public class ChatPage  {
         frame.setLocationRelativeTo(null);
         frame.setLayout(new BorderLayout());
 
-        //zone info personnelle
-        JPanel infoPanel = new JPanel(new GridLayout(2, 2)); // GridLayout with 2 rangs, 2 colonnes
+        //zone1 info personnelle
+        JPanel infoPanel = new JPanel(new GridLayout(3, 2)); // GridLayout with 2 rangs, 2 colonnes
         infoPanel.setBackground(Color.LIGHT_GRAY);
         JLabel usernameLabel = new JLabel("UserName:"+ this.username);
         JLabel adresseLabel = new JLabel("Adresse:"+this.adresse);
         JButton changeUsername=new JButton("Change Nickname");
         JButton deconneButton=new JButton("deconnection");
         deconneButton.setMargin(new Insets(10, 20, 10, 20));
+        JLabel errorNickname =new JLabel();
+        errorNickname.setForeground(Color.RED);
+        if (app.exist_nickname(username)){
+            errorNickname.setText("Votre nickname est deja existe,nous vous conseillons de changer a un autre !!!");
+        }
 
         infoPanel.add(usernameLabel);
         infoPanel.add(changeUsername);
         infoPanel.add(adresseLabel);
         infoPanel.add(deconneButton);
-       
+        infoPanel.add(errorNickname);
+
+        
 
         //changer le nickname
         changeUsername.addActionListener(e -> {
             //JOptionPane:une boîte de dialogue modale pour demander de saisir le nouveau pseudonyme
             String newUsername = JOptionPane.showInputDialog(frame, "Nouveau pseudonyme:");
             if (newUsername != null && !newUsername.isEmpty()) {
-                this.user.getUserlocal().setUserName(newUsername);
-
-                usernameLabel.setText("UserName: " + this.user.getUserlocal().getUserName());
+                 if(this.app.exist_nickname(newUsername)){
+                     JLabel memeNickname =new JLabel("Ce nickname est deja existe");
+                     memeNickname.setForeground(Color.RED);
+                     infoPanel.add(memeNickname);
+                     infoPanel.revalidate();
+                     frame.pack();
+                                         
+                 }
+                 else
+                 {
+                     this.user.getUserlocal().setUserName(newUsername);
+                     this.appdecou.UpdateChangeName(newUsername, PORT_DISCOVERY);
+                     usernameLabel.setText("UserName: " + this.user.getUserlocal().getUserName());
+                 }
+                
             }
         });
 
@@ -78,7 +101,8 @@ public class ChatPage  {
         });
        
 
-        //zone list de friends
+
+        //zone2  list de friends
         JPanel listFriendPanel = new JPanel(new GridLayout(listFriend.getSize() + 1,2));
         listFriendPanel.setBackground(Color.WHITE);
         
@@ -93,7 +117,7 @@ public class ChatPage  {
         renouvellerButton.addActionListener(e -> {
                 System.out.println("bien renouveller le list");
                 frame.dispose();
-                SwingUtilities.invokeLater(() -> new ChatPage(this.appdecou));
+                SwingUtilities.invokeLater(() -> new ChatPage(this.app));
         });
 
         listFriendPanel.add(listFriendJLabel);
