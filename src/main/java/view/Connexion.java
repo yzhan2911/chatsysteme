@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.IOException;
 import java.net.InetAddress;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -14,6 +15,7 @@ import javax.swing.*;
 
 import controller.controller;
 import controller.controllerDecouvert;
+import controller.controllerMessage;
 import model.user;
 import model.contact.contact;
 import protocols.UDPsender;
@@ -21,6 +23,7 @@ import protocols.UDPsender;
 public class Connexion  {
    
     public static final int PORT_DISCOVERY = 1929;
+    public static final int PORT_COMMUNICATION = 1650;
     
     public Connexion() throws UnknownHostException{
         JFrame frame = new JFrame("Log in!");
@@ -77,7 +80,9 @@ public class Connexion  {
         mainPanel.add(usernameLabel);
         mainPanel.add(usernameField);
 
-     
+        JLabel errorNickname =new JLabel();
+        errorNickname.setForeground(Color.RED);
+        mainPanel.add(errorNickname);
         
         //button login
         JButton loginButton = new JButton("log in!");
@@ -87,18 +92,20 @@ public class Connexion  {
             try {
             
                 user userlocal = new  user(new contact(username, InetAddress.getLocalHost()));
-                controller app =new controller(userlocal, new UDPsender(), PORT_DISCOVERY);
+                controller app =new controller(userlocal, PORT_DISCOVERY, PORT_COMMUNICATION);
                 controllerDecouvert decou = app.getConDecou();
+                    controllerMessage conMsg=app.getconMessage();
                 decou.connexion(PORT_DISCOVERY); 
-                
-                // if (app.exist_nickname(username)){
-                //     errorNickname.setText("ce nale est deja existe!!!");
-                // }else{
+            
+                if (app.exist_nickname(username)){
+                    errorNickname.setText("ce nale est deja existe!!!");
+                }else{
                 SwingUtilities.invokeLater(() -> new ChatPage(app));
-                  
+                        conMsg.connexion();
+                
                 frame.dispose();
-                // }
-            } catch (UnknownHostException | InterruptedException e1) {
+                }
+            } catch (InterruptedException | IOException e1) {
                 // TODO Auto-generated catch block
                 e1.printStackTrace();
             }

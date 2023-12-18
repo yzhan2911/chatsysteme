@@ -14,10 +14,10 @@ public class controllerDecouvert {
     private UDPrecever udpr;
     private UDPsender udps;
 
-    public controllerDecouvert(user userlocal,UDPsender udps,UDPrecever udpr){
+    public controllerDecouvert(user userlocal,int port){
         this.user=userlocal;
-        this.udps=udps;
-        this.udpr=udpr;
+        this.udpr= new UDPrecever(port, this.user);
+        this.udps=new UDPsender();
         
     }
 
@@ -38,5 +38,22 @@ public class controllerDecouvert {
         Thread.sleep(1000);
         this.user.getUserlocal().setUserEtat(etat.DISCONNECTED);
         this.udpr.stopReceiver();
+    }
+
+
+    public UDPrecever getUDPr(){
+        return this.udpr;
+    }
+
+    public void setUDPr(UDPrecever udpr) {
+        this.udpr = udpr;
+    }
+
+    public UDPsender getUDPs(){
+        return this.udps;
+    }
+
+    public void setUDPs(UDPsender udps){
+        this.udps = udps;
     }
 }

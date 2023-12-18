@@ -1,5 +1,6 @@
 package protocols;
 
+import model.user;
 import model.contact.contact;
 import model.contact.etat;
 import controller.controller;
@@ -11,12 +12,12 @@ import java.util.Enumeration;
 
 
 public class UDPrecever extends Thread {
-    private controller app;
+    private user user;
     private DatagramSocket socket;
     private boolean stop;
 
-    public UDPrecever(int port,controller app ) {
-        this.app=app;
+    public UDPrecever(int port,user user ) {
+        this.user=user;
         this.stop = false;
         try {
             this.socket = new DatagramSocket(port); // Port pour écouter les messages 
@@ -26,8 +27,8 @@ public class UDPrecever extends Thread {
         }
     }
 
-    public synchronized void RépondreAuMessageDecouvert(contact user,InetAddress addressDes,int port) {
-        String reponse="REPONSE_"+user.getUserName()+"_"+user.getUserIP()+"_"+user.getUserEtat();
+    public synchronized void RépondreAuMessageDecouvert(contact userlocal,InetAddress addressDes,int port) {
+        String reponse="REPONSE_"+userlocal.getUserName()+"_"+userlocal.getUserIP()+"_"+userlocal.getUserEtat();
 
         byte[] buffer= reponse.getBytes();
         try(DatagramSocket socket = new DatagramSocket()){
@@ -78,7 +79,7 @@ public class UDPrecever extends Thread {
         
                         contact useremo = new contact(name, ip);
                        
-                        this.app.getUser().removeuser(useremo);
+                        user.removeuser(useremo);
                        
 
                     }// user ajouter
@@ -98,9 +99,9 @@ public class UDPrecever extends Thread {
                      
                             useradd.setUserEtat(etatuser);
                
-                            app.getUser().adduser(useradd);
+                            this.user.adduser(useradd);
                         }
-                        RépondreAuMessageDecouvert( this.app.getUser().getUserlocal(), addressSource, port);
+                        RépondreAuMessageDecouvert( this.user.getUserlocal(), addressSource, port);
                         
                     }else if(receivedMessage.startsWith("REPONSE_")) {
                         System.out.println("Rucu le message REPONSE et traite les données");
@@ -118,9 +119,9 @@ public class UDPrecever extends Thread {
                      
                             useradd.setUserEtat(etatuser);
                
-                            app.getUser().adduser(useradd);
+                            this.user.adduser(useradd);
                             System.out.println("bien connexion");
-                            System.out.println(this.app.getUser().getUserlist());
+                            System.out.println(this.user.getUserlist());
                         }
                         else {
                             System.out.println("error de decouvert");
@@ -132,7 +133,7 @@ public class UDPrecever extends Thread {
                  
                         String ipAddressString = parts[2].substring(parts[2].indexOf("/") + 1);
                         InetAddress ip = InetAddress.getByName(ipAddressString);
-                        this.app.getUser().getUserbyip(ip).setUserName(newname);
+                        this.user.getUserbyip(ip).setUserName(newname);
                     }
                 }
             }catch (IOException e) {
@@ -152,9 +153,6 @@ public class UDPrecever extends Thread {
         return !this.stop;
     }
 
-    public synchronized void setController(controller app){
-        this.app=app;
-    }
     public void stopReceiver() {
         this.stop = true;
         if (this.socket != null && !this.socket.isClosed()) {

@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 
@@ -14,6 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 
+import controller.controllerMessage;
 import model.user;
 import model.contact.contact;
 
@@ -22,7 +24,7 @@ public class messagerie {
     private JTextArea chatHistoryArea;
     private JTextField messageField;
     
-    public messagerie(user user, contact currentContact) {
+    public messagerie(user user, contact currentContact,controllerMessage conMsg) {
         frame = new JFrame(currentContact.getUserName());
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//ici a modifier
         frame.setSize(400, 300);
@@ -44,11 +46,17 @@ public class messagerie {
 
         messageField = new JTextField();
         JButton sendButton = new JButton("Envoyer");
-        sendButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sendMessage();
-            }
+        sendButton.addActionListener(e-> {
+             
+                    try {
+                        conMsg.envoyermsg(messageField.getText(),currentContact.getUserIP());
+                        sendMessage();
+                    } catch (IOException e1) {
+                        // TODO Auto-generated catch block
+                        e1.printStackTrace();
+                    }
+                
+            
         });
 
         inputPanel.add(messageField, BorderLayout.CENTER);

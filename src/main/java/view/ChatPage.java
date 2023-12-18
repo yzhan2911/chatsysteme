@@ -7,11 +7,13 @@ import model.user;
 import model.contact.contact;
 import controller.controller;
 import controller.controllerDecouvert;
+import controller.controllerMessage;
 
 public class ChatPage  {
 
     public static final int PORT_DISCOVERY = 1929;
     
+    private controllerMessage appMsg;
     private controllerDecouvert appdecou;
     private controller app;
     private user user;
@@ -22,7 +24,7 @@ public class ChatPage  {
     public ChatPage(controller app) {
         this.app=app;
         this.appdecou=app.getConDecou();
-
+        this.appMsg=app.getconMessage();
         this.user=app.getUser();
         this.username=this.user.getUserlocal().getUserName();
         this.adresse=this.user.getUserlocal().getUserIP();
@@ -134,7 +136,7 @@ public class ChatPage  {
     
             contactButton.addActionListener(e -> {
                 System.out.println("Message envoyé à : " + currentContact.getUserName());
-                SwingUtilities.invokeLater(() -> new messagerie(this.user,currentContact));
+                SwingUtilities.invokeLater(() -> new messagerie(this.user,currentContact,appMsg));
             });
 
             listFriendPanel.add(contactButton);

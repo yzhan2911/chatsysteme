@@ -1,47 +1,38 @@
 package controller;
 
+import java.io.IOException;
+
 import javax.swing.DefaultListModel;
 
 import model.user;
 import model.contact.contact;
-import protocols.UDPrecever;
-import protocols.UDPsender;
+
 public class controller {
     private user userlocal;
-    private UDPrecever udpr;
-    private UDPsender udps;
+    private controllerMessage conMsg;
     private controllerDecouvert conDecou;
 
-    public controller(user userlocal,UDPsender udps,int port){
+    public controller(user userlocal,int portUDP,int portTCP) throws IOException{
         this.userlocal=userlocal;
-        this.udpr= new UDPrecever(port, this);
-        this.udps=udps;
-        this.conDecou=new controllerDecouvert(userlocal,udps,udpr); 
+        this.conDecou=new controllerDecouvert(userlocal, portUDP); 
+        this.conMsg = new controllerMessage(userlocal,portTCP);
+    
     }
 
 
+
     //get et set
+    public controllerMessage getconMessage(){
+        return conMsg;
+    }
+    public void setConMessage(controllerMessage conMsg) {
+        this.conMsg=conMsg;
+    }
     public controllerDecouvert getConDecou() {
         return conDecou;
     }
     public void setConDecou(controllerDecouvert conDecou) {
         this.conDecou = conDecou;
-    }
-
-    public UDPrecever getUDPr(){
-        return this.udpr;
-    }
-
-    public void setUDPr(UDPrecever udpr) {
-        this.udpr = udpr;
-    }
-
-    public UDPsender getUDPs(){
-        return this.udps;
-    }
-
-    public void setUDPs(UDPsender udps){
-        this.udps = udps;
     }
 
     public user getUser(){
