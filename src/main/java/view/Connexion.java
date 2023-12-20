@@ -69,7 +69,7 @@ public class Connexion  {
         mainPanel.setOpaque(false); //panel en transparent
         JLabel adresseLabel = new JLabel("Adresse:");
         adresseLabel.setForeground(Color.white);//changer la couleur de JLabel
-        JLabel adresseField=new JLabel(""+InetAddress.getLocalHost());
+        JLabel adresseField=new JLabel(""+contact.getCurrenAddress());
         adresseField.setForeground(Color.white);
         JLabel usernameLabel = new JLabel("UserName:");
         usernameLabel.setForeground(Color.white);
@@ -91,7 +91,7 @@ public class Connexion  {
             String username=usernameField.getText();
             try {
             
-                user userlocal = new  user(new contact(username, InetAddress.getLocalHost()));
+                user userlocal = new  user(new contact(username, contact.getCurrenAddress()));
                 controller app =new controller(userlocal, PORT_DISCOVERY, PORT_COMMUNICATION);
                 controllerDecouvert decou = app.getConDecou();
                     controllerMessage conMsg=app.getconMessage();

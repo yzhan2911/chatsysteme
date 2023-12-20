@@ -15,8 +15,9 @@ public class TCPrecever extends Thread{
         public void run() {
             while (true) {
                 try {
-                    System.out.println("1");
+                    System.out.println("before recevoir");
                     Socket clientSocket = serverSocket.accept();
+                    System.out.println("after recevoir");
                     new ClientHandler(clientSocket).start();
                 } catch (IOException e) {
                     e.printStackTrace();
