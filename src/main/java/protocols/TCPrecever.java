@@ -5,7 +5,6 @@ import java.io.*;
 
 public class TCPrecever extends Thread{
         private ServerSocket serverSocket;
-        private Socket clientSocket;
 
         public TCPrecever(int port) throws IOException{
             this.serverSocket=new ServerSocket(port);
@@ -42,9 +41,7 @@ public class TCPrecever extends Thread{
                     InputStream in =  clientSocket.getInputStream();
                     DataInputStream dis = new DataInputStream(in);
                     String clientMessage = dis.readUTF();
-
-
-                    System.out.println(clientMessage);
+                    // update history et fenete text ici
                     dis.close();
                     clientSocket.close();
                     

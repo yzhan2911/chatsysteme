@@ -1,5 +1,6 @@
 package controller;
 
+import model.BaseDeDonnee;
 import model.user;
 import model.contact.etat;
 import protocols.*;
@@ -22,7 +23,9 @@ public class controllerDecouvert {
     }
 
     public void UpdateChangeName(String newName,int port){
+        BaseDeDonnee.changerUserName(user.getUserlocal().getUserName(), newName);
         udps.sendBroadcast("CHANGEDNAME_"+newName+"_"+user.getUserlocal(), port);
+       
     }
 
     public void connexion(int port) throws InterruptedException{

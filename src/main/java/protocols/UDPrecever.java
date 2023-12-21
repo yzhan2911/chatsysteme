@@ -1,5 +1,6 @@
 package protocols;
 
+import model.BaseDeDonnee;
 import model.user;
 import model.contact.contact;
 import model.contact.etat;
@@ -130,9 +131,9 @@ public class UDPrecever extends Thread {
 
                         String[] parts = receivedMessage.split("_");
                         String newname = parts[1];
-                 
                         String ipAddressString = parts[2].substring(parts[2].indexOf("/") + 1);
                         InetAddress ip = InetAddress.getByName(ipAddressString);
+                        BaseDeDonnee.changerUserName(this.user.getUserlocal().getUserName(), newname);
                         this.user.getUserbyip(ip).setUserName(newname);
                     }
                 }

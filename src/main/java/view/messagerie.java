@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Date;
+import java.util.List;
 import java.text.SimpleDateFormat;
 
 import javax.swing.JButton;
@@ -17,14 +18,17 @@ import javax.swing.SwingUtilities;
 
 import controller.controllerMessage;
 import model.user;
+import model.BaseDeDonnee.dataMessage;
 import model.contact.contact;
 
 public class messagerie {
     private JFrame frame;
     private JTextArea chatHistoryArea;
     private JTextField messageField;
+    private controllerMessage conMsg;
     
     public messagerie(user user, contact currentContact,controllerMessage conMsg) {
+        this.conMsg = conMsg;
         frame = new JFrame(currentContact.getUserName());
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//ici a modifier
         frame.setSize(400, 300);
@@ -38,7 +42,7 @@ public class messagerie {
         chatHistoryArea = new JTextArea();
         chatHistoryArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(chatHistoryArea);
-        
+        updateHistory();
 
         //zone d'envoyer
         JPanel inputPanel = new JPanel();
@@ -49,8 +53,10 @@ public class messagerie {
         sendButton.addActionListener(e-> {
              
                     try {
-                        conMsg.envoyermsg(messageField.getText(),currentContact.getUserIP());
-                        sendMessage();
+                        Date now = new Date(); // Obtient la date et l'heure actuelles
+                        String msg = messageField.getText();
+                        conMsg.envoyermsg(msg,currentContact.getUserIP(),now );
+                        appendToChatHistory("["+now+"]"+user.getUserlocal().getUserName()+": "+ msg);
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
@@ -72,13 +78,11 @@ public class messagerie {
         frame.setVisible(true);
     }
 
-    private void sendMessage() {
-        String message = messageField.getText();
-        if (!message.isEmpty()) {
-            String formattedMessage = getFormattedTimestamp() + " Moi: " + message;
-            appendToChatHistory(formattedMessage);
-            messageField.setText(""); // Effacer le champ de texte après l'envoi
-        }
+    private void updateHistory() {
+        List<dataMessage> listdata = this.conMsg.getBdd().gethistory(); 
+        for(dataMessage data:listdata){
+            appendToChatHistory("["+data.time()+"]"+data.sender()+": "+data.message());
+        }       
     }
 
     private void appendToChatHistory(String message) {
@@ -86,10 +90,4 @@ public class messagerie {
     }
     
     //message horodatés
-    private String getFormattedTimestamp() {
-        Date now = new Date(); // Obtient la date et l'heure actuelles
-        SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm:ss"); // Format de l'heure (modifiable selon vos besoins)
-        return "[" + dateFormat.format(now) + "]";
-    }
-
 }
