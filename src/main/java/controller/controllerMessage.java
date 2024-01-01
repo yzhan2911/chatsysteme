@@ -9,6 +9,7 @@ import model.BaseDeDonnee;
 import model.user;
 import protocols.TCPrecever;
 import protocols.TCPsender;
+import view.messagerie;
 
 public class controllerMessage {
       private TCPrecever tcpr;
@@ -16,25 +17,33 @@ public class controllerMessage {
       private user userlocal;
       private int port;
       private BaseDeDonnee bdd;
+      private static messagerie messageView;
+
       public controllerMessage(user userlocal,int port) throws IOException{
          this.port=port;
          this.tcpr=new TCPrecever(port) ;
          this.tcps=new TCPsender();
          this.userlocal=userlocal;
          this.bdd= new BaseDeDonnee();
-
+         controllerMessage.messageView=messageView;
       }
 
 
       public void connexion() throws IOException{
          this.tcpr.start();
       }
+
       public void envoyermsg(String msg, InetAddress ipdes, Date time) throws UnknownHostException, IOException{
          this.tcps.envoyermessage(ipdes,port, msg);
          bdd.addmessageData(userlocal.getUserlocal().getUserName(), userlocal.getUserbyip(ipdes).getUserName(), time, msg);
       }
 
-      //get 
+      public static void updateChatHistory() {
+         messageView.updateHistory();
+      }
+
+
+      //getteurs
       public BaseDeDonnee getBdd() {
          return bdd;
       }

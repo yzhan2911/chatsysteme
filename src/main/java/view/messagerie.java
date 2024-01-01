@@ -1,21 +1,15 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.text.SimpleDateFormat;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
 import controller.controllerMessage;
 import model.user;
 import model.BaseDeDonnee.dataMessage;
@@ -30,8 +24,8 @@ public class messagerie {
     public messagerie(user user, contact currentContact,controllerMessage conMsg) {
         this.conMsg = conMsg;
         frame = new JFrame(currentContact.getUserName());
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);//ici a modifier
-        frame.setSize(400, 300);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        frame.setSize(600, 300);
         frame.setLocationRelativeTo(null);
 
         JPanel mainPanel = new JPanel();
@@ -56,7 +50,8 @@ public class messagerie {
                         Date now = new Date(); // Obtient la date et l'heure actuelles
                         String msg = messageField.getText();
                         conMsg.envoyermsg(msg,currentContact.getUserIP(),now );
-                        appendToChatHistory("["+now+"]"+user.getUserlocal().getUserName()+": "+ msg);
+                        //appendToChatHistory("["+now+"]"+user.getUserlocal().getUserName()+": "+ msg);
+                        updateHistory();
                     } catch (IOException e1) {
                         // TODO Auto-generated catch block
                         e1.printStackTrace();
@@ -67,10 +62,6 @@ public class messagerie {
 
         inputPanel.add(messageField, BorderLayout.CENTER);
         inputPanel.add(sendButton, BorderLayout.EAST);
-
-
-
-
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         mainPanel.add(inputPanel, BorderLayout.SOUTH);
 
@@ -78,7 +69,8 @@ public class messagerie {
         frame.setVisible(true);
     }
 
-    private void updateHistory() {
+    public void updateHistory() {
+        chatHistoryArea.setText(""); // Effacer le contenu actuel
         List<dataMessage> listdata = this.conMsg.getBdd().gethistory(); 
         for(dataMessage data:listdata){
             appendToChatHistory("["+data.time()+"]"+data.sender()+": "+data.message());
@@ -89,5 +81,5 @@ public class messagerie {
         chatHistoryArea.append(message + "\n");
     }
     
-    //message horodatés
+    
 }

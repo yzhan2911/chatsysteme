@@ -27,6 +27,7 @@ public class Connexion  {
     
     public Connexion() throws UnknownHostException{
         JFrame frame = new JFrame("Log in!");
+        frame.setSize(600, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
       
@@ -94,15 +95,15 @@ public class Connexion  {
                 user userlocal = new  user(new contact(username, contact.getCurrenAddress()));
                 controller app =new controller(userlocal, PORT_DISCOVERY, PORT_COMMUNICATION);
                 controllerDecouvert decou = app.getConDecou();
-                    controllerMessage conMsg=app.getconMessage();
+                controllerMessage conMsg=app.getconMessage();
                 decou.connexion(PORT_DISCOVERY); 
             
                 if (app.exist_nickname(username)){
-                    errorNickname.setText("ce nale est deja existe!!!");
-                }else{
+                    errorNickname.setText("Ce pseudo est déjà utilisé. Nous vous conseillons d'en choisir un autre!");
+                }else
+                {
                 SwingUtilities.invokeLater(() -> new ChatPage(app));
-                        conMsg.connexion();
-                
+                conMsg.connexion();
                 frame.dispose();
                 }
             } catch (InterruptedException | IOException e1) {
@@ -123,8 +124,7 @@ public class Connexion  {
         
         
  
-        frame.pack();
-        // Display the window.
+        //frame.pack(); //s'ajuster à la taille préférée de ses composants.
         frame.setVisible(true);
        
     }

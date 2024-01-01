@@ -1,6 +1,9 @@
 package protocols;
 
 import java.net.*;
+
+import controller.controllerMessage;
+
 import java.io.*;
 
 public class TCPrecever extends Thread{
@@ -42,6 +45,7 @@ public class TCPrecever extends Thread{
                     DataInputStream dis = new DataInputStream(in);
                     String clientMessage = dis.readUTF();
                     // update history et fenete text ici
+                    controllerMessage.updateChatHistory();
                     dis.close();
                     clientSocket.close();
                     

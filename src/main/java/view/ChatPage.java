@@ -30,9 +30,10 @@ public class ChatPage  {
         this.adresse=this.user.getUserlocal().getUserIP();
         this.listFriend = this.user.getUserlist();
         //pour tester
-       // this.listFriend.addElement(new contact("ZY", adresse));
-        //this.listFriend.addElement(new contact("GJJ", adresse));
-        //this.listFriend.addElement(new contact("Bob", adresse));
+        this.listFriend.addElement(new contact("ZY", adresse));
+        this.listFriend.addElement(new contact("GJJ", adresse));
+        this.listFriend.addElement(new contact("Bob", adresse));
+  
         PagePrincipal();
     }
 
@@ -46,17 +47,17 @@ public class ChatPage  {
         frame.setLayout(new BorderLayout());
 
         //zone1 info personnelle
-        JPanel infoPanel = new JPanel(new GridLayout(3, 2)); // GridLayout with 2 rangs, 2 colonnes
+        JPanel infoPanel = new JPanel(new GridLayout(3, 2)); 
         infoPanel.setBackground(Color.LIGHT_GRAY);
         JLabel usernameLabel = new JLabel("UserName:"+ this.username);
         JLabel adresseLabel = new JLabel("Adresse:"+this.adresse);
         JButton changeUsername=new JButton("Change Nickname");
-        JButton deconneButton=new JButton("deconnection");
+        JButton deconneButton=new JButton("Déconnecter");
         deconneButton.setMargin(new Insets(10, 20, 10, 20));
         JLabel errorNickname =new JLabel();
         errorNickname.setForeground(Color.RED);
         if (app.exist_nickname(username)){
-            errorNickname.setText("Votre nickname est deja existe,nous vous conseillons de changer a un autre !!!");
+            errorNickname.setText("Ce pseudo est déjà utilisé. Nous vous conseillons d'en choisir un autre!!");
         }
 
         infoPanel.add(usernameLabel);
@@ -72,20 +73,19 @@ public class ChatPage  {
             //JOptionPane:une boîte de dialogue modale pour demander de saisir le nouveau pseudonyme
             String newUsername = JOptionPane.showInputDialog(frame, "Nouveau pseudonyme:");
             if (newUsername != null && !newUsername.isEmpty()) {
-                 if(this.app.exist_nickname(newUsername)){
-                     JLabel memeNickname =new JLabel("Ce nickname est deja existe");
-                     memeNickname.setForeground(Color.RED);
-                     infoPanel.add(memeNickname);
-                     infoPanel.revalidate();
-                     frame.pack();
-                                         
-                 }
-                 else
-                 {
-                     this.user.getUserlocal().setUserName(newUsername);
-                     this.appdecou.UpdateChangeName(newUsername, PORT_DISCOVERY);
-                     usernameLabel.setText("UserName: " + this.user.getUserlocal().getUserName());
-                 }
+                if(this.app.exist_nickname(newUsername)){
+                errorNickname.setText("Ce pseudo existe déjà");
+               
+                infoPanel.revalidate();
+                frame.pack();            
+                }
+                else
+                {
+                //le changement de nickname dans bdd est ecrit dans UDPrecever
+                this.user.getUserlocal().setUserName(newUsername);
+                this.appdecou.UpdateChangeName(newUsername, PORT_DISCOVERY);
+                usernameLabel.setText("UserName: " + this.user.getUserlocal().getUserName());
+                }
                 
             }
         });
@@ -105,25 +105,24 @@ public class ChatPage  {
 
 
         //zone2  list de friends
-        JPanel listFriendPanel = new JPanel(new GridLayout(listFriend.getSize() + 1,2));
+        JPanel listFriendPanel = new JPanel(new GridLayout((listFriend.getSize()/2) + 2,2));
         listFriendPanel.setBackground(Color.WHITE);
-        
-        JLabel listFriendJLabel = new JLabel("  List Friend: ");
        
         //un boutton renouvller le list
         JButton renouvellerButton=new JButton();
-        renouvellerButton.setText("renouveller List ");
+        renouvellerButton.setText("List Friend: ");
         ImageIcon renouvellerIcon=resizeImageIconFromURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRo-sqzTj9yUuS8qP5oAQ0Tc2apn4YZZuSaIhlNnzTEuQzTGeNmCN2KrCerJt3FPP4dK68&usqp=CAU"
                                                             ,30,30);
         renouvellerButton.setIcon(renouvellerIcon);
         renouvellerButton.addActionListener(e -> {
-                System.out.println("bien renouveller le list");
+                System.out.println("bien renouvelle le list");
                 frame.dispose();
                 SwingUtilities.invokeLater(() -> new ChatPage(this.app));
         });
 
-        listFriendPanel.add(listFriendJLabel);
+        
         listFriendPanel.add(renouvellerButton);
+        listFriendPanel.add(new JLabel());
         
         for (int i = 0; i < listFriend.getSize(); i++) {
             contact currentContact = listFriend.getElementAt(i);
