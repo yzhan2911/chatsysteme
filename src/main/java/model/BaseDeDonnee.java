@@ -6,7 +6,7 @@ import java.util.Date;
 
 
 public class BaseDeDonnee {
-    public static String url = "jdbc:sqlite:BaseDeDonnee/java.db";
+    public static String url = "jdbc:sqlite:bdd.db";
     public static record dataMessage(Date time, String sender, String recever, String message){}
     public BaseDeDonnee(){
         create_new_basededonne();
@@ -20,7 +20,7 @@ public class BaseDeDonnee {
             try {
                 Connection connection=DriverManager.getConnection(url);
                 meta =connection.getMetaData();
-                System.out.println("[Model] nom de driver"+meta.getDriverName());
+                System.out.println("[Model] nom de driver: "+meta.getDriverName());
                 System.out.println("[Model] creation base de donnee reussir");
             } catch (SQLException e) {
                 // TODO Auto-generated catch block
@@ -44,7 +44,7 @@ public class BaseDeDonnee {
     //      return exist;
     // }
     public void create_new_table(){
-            String sql = "CREAT TABLE IF NOT EXISTS history\n"
+            String sql = "CREATE TABLE IF NOT EXISTS history(\n"
             + "time DATETIME , \n" 
             + "sender varchar primary key, \n"
             + "recever varchar ,\n"

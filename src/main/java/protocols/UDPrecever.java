@@ -4,7 +4,6 @@ import model.BaseDeDonnee;
 import model.user;
 import model.contact.contact;
 import model.contact.etat;
-import controller.controller;
 
 import java.io.*;
 import java.net.*;
