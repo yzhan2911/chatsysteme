@@ -30,10 +30,11 @@ public class ChatPage  {
         this.adresse=this.user.getUserlocal().getUserIP();
         this.listFriend = this.user.getUserlist();
         //pour tester
-        /*this.listFriend.addElement(new contact("ZY", adresse));
+        /*
+        this.listFriend.addElement(new contact("ZY", adresse));
         this.listFriend.addElement(new contact("GJJ", adresse));
         this.listFriend.addElement(new contact("Bob", adresse));
-  */
+        */
         PagePrincipal();
     }
 
@@ -59,14 +60,11 @@ public class ChatPage  {
         if (app.exist_nickname(username)){
             errorNickname.setText("Ce pseudo est déjà utilisé. Nous vous conseillons d'en choisir un autre!!");
         }
-
         infoPanel.add(usernameLabel);
         infoPanel.add(changeUsername);
         infoPanel.add(adresseLabel);
         infoPanel.add(deconneButton);
         infoPanel.add(errorNickname);
-
-        
 
         //changer le nickname
         changeUsername.addActionListener(e -> {
@@ -75,7 +73,6 @@ public class ChatPage  {
             if (newUsername != null && !newUsername.isEmpty()) {
                 if(this.app.exist_nickname(newUsername)){
                 errorNickname.setText("Ce pseudo existe déjà");
-               
                 infoPanel.revalidate();
                 frame.pack();            
                 }
@@ -90,19 +87,16 @@ public class ChatPage  {
             }
         });
 
-
         //Deconnecter
         deconneButton.addActionListener(e->{
            try {
             this.appdecou.deconnexion(PORT_DISCOVERY);
             frame.dispose();
         } catch (InterruptedException e1) {
-            // TODO Auto-generated catch block
+            System.out.println("[view] Chatpage: erreur de deconnecter");
             e1.printStackTrace();
         }
         });
-       
-
 
         //zone2  list de friends
         JPanel listFriendPanel = new JPanel(new GridLayout((listFriend.getSize()/2) + 2,2));
@@ -115,35 +109,29 @@ public class ChatPage  {
                                                             ,30,30);
         renouvellerButton.setIcon(renouvellerIcon);
         renouvellerButton.addActionListener(e -> {
-                System.out.println("bien renouvelle le list");
+                System.out.println("[view] Chatpage: bien renouvelle le list");
                 frame.dispose();
                 SwingUtilities.invokeLater(() -> new ChatPage(this.app));
         });
 
-        
         listFriendPanel.add(renouvellerButton);
         listFriendPanel.add(new JLabel());
         
         for (int i = 0; i < listFriend.getSize(); i++) {
             contact currentContact = listFriend.getElementAt(i);
-    
             JButton contactButton = new JButton();
             contactButton.setText(currentContact.getUserName()+" : "+currentContact.getUserIP());
             ImageIcon icon=resizeImageIconFromURL("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUuljTu0ME5vw04dWtw_ra0GUXSusHwID3dQWXvu1hM7cXqCGKG7uFmYPhw8QvKcPZdNM&usqp=CAU"
                                                                 ,50,50);
             contactButton.setIcon(icon);
-    
             contactButton.addActionListener(e -> {
-                System.out.println("Message envoyé à : " + currentContact.getUserName());
+                System.out.println("[view] Chatpage: Message envoyé à : " + currentContact.getUserName());
                 SwingUtilities.invokeLater(() -> new messagerie(this.user,currentContact,appMsg));
             });
-
             listFriendPanel.add(contactButton);
         }
-
         frame.add(infoPanel,BorderLayout.NORTH);
         frame.add(listFriendPanel,BorderLayout.CENTER);
-
         frame.pack();
         frame.setVisible(true);
     }
@@ -156,6 +144,7 @@ public class ChatPage  {
             Image resizedImage = image.getScaledInstance(width, height, Image.SCALE_SMOOTH);
             return new ImageIcon(resizedImage);
         } catch (MalformedURLException e) {
+            System.out.println("[view] Chatpage:erreur de transfort");
             e.printStackTrace();
             return null;
         }

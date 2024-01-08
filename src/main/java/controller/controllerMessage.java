@@ -9,7 +9,6 @@ import model.BaseDeDonnee;
 import model.user;
 import protocols.TCPrecever;
 import protocols.TCPsender;
-import view.messagerie;
 
 public class controllerMessage {
       private TCPrecever tcpr;
@@ -17,7 +16,6 @@ public class controllerMessage {
       private user userlocal;
       private int port;
       private BaseDeDonnee bdd;
-      private static messagerie messageView;
 
       public controllerMessage(user userlocal,int port) throws IOException{
          this.port=port;
@@ -28,8 +26,6 @@ public class controllerMessage {
         
       }
      
-     
-
       public void connexion() throws IOException{
          this.tcpr.start();
       }
@@ -39,9 +35,6 @@ public class controllerMessage {
          bdd.addmessageData(userlocal.getUserlocal().getUserName(), userlocal.getUserbyip(ipdes).getUserName(), time, msg);
       }
 
-
-
-      //getteurs
       public BaseDeDonnee getBdd() {
          return bdd;
       }

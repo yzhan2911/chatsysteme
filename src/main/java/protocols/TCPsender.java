@@ -15,8 +15,6 @@ public class TCPsender extends Thread {
             dos.writeUTF(msg); 
             }
         
-
-    
         public void stopConnection() throws IOException {
             dos.close();
             out.close();

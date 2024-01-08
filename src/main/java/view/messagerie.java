@@ -11,7 +11,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-
 import controller.controllerMessage;
 import model.user;
 import model.BaseDeDonnee.dataMessage;
@@ -23,14 +22,13 @@ public class messagerie {
     private JTextField messageField;
     private controllerMessage conMsg;
 
-    
     public messagerie(user user, contact currentContact,controllerMessage conMsg) {
         this.conMsg = conMsg;
         conMsg.getTcpr().setMessageListener(message->{
             try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
+                System.out.println("[view] messagerie: erreur de sleep");
 				e.printStackTrace();
 			}
             updateHistory();
@@ -39,11 +37,8 @@ public class messagerie {
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.setSize(600, 300);
         frame.setLocationRelativeTo(null);
-        
-
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
-
 
         //zone histoire de la conservation
         chatHistoryArea = new JTextArea();
@@ -54,11 +49,9 @@ public class messagerie {
         //zone d'envoyer
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new BorderLayout());
-
         messageField = new JTextField();
         JButton sendButton = new JButton("Envoyer");
         sendButton.addActionListener(e-> {
-             
                     try {
                         Date now = new Date(); // Obtient la date et l'heure actuelles
                         String msg = messageField.getText();
@@ -66,9 +59,8 @@ public class messagerie {
                         conMsg.envoyermsg(msg,currentContact.getUserIP(),now );
                         //appendToChatHistory("["+now+"]"+user.getUserlocal().getUserName()+": "+ msg);
                         updateHistory();
-                        
                     } catch (IOException e1) {
-                        // TODO Auto-generated catch block
+                      System.out.println("[view] messagerie: erreur de envoyer");
                         e1.printStackTrace();
                     }
                 
@@ -79,7 +71,6 @@ public class messagerie {
         inputPanel.add(sendButton, BorderLayout.EAST);
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         mainPanel.add(inputPanel, BorderLayout.SOUTH);
-
         frame.add(mainPanel);
         frame.setVisible(true);
     }
@@ -93,7 +84,7 @@ public class messagerie {
     }
 
     private void appendToChatHistory(String message) {
-            chatHistoryArea.append(message + "\n");
+        chatHistoryArea.append(message + "\n");
     }
     
     

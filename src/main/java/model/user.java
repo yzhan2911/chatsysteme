@@ -18,8 +18,6 @@ public class user {
 
     }
 
-
-
     public contact getUserlocal(){
         return userlocal;
     }
@@ -35,10 +33,9 @@ public class user {
             if(use.getUserIP().equals(userajout.getUserIP())){
                 return;
             }
-
         }
         this.userlist.addElement(userajout);
-        System.out.println("[Model] List of user: "+this.userlist.toString());
+        System.out.println("[Model] user: List of user: "+this.userlist.toString());
     }
 
     public synchronized void removeuser(contact useraremo){
@@ -48,9 +45,8 @@ public class user {
             if(use.getUserIP().equals(useraremo.getUserIP())){
                 this.userlist.removeElementAt(i);
             }
-
         }
-        System.out.println("[Model] List of user: "+this.userlist.toString());
+        System.out.println("[Model] user: List of user: "+this.userlist.toString());
     }
     
     public contact getUserbyname(String username){
@@ -75,8 +71,4 @@ public class user {
         return  use;
     }
 
-    /*public void removeall(){
-        this.userlist.removeAllElements();
-    }
-    */
 }

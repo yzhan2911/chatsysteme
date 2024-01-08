@@ -1,11 +1,11 @@
 package controller;
 
-import java.io.IOException;
-
-import javax.swing.DefaultListModel;
-
 import model.user;
 import model.contact.contact;
+import java.io.IOException;
+import javax.swing.DefaultListModel;
+
+
 
 public class controller {
     private user userlocal;
@@ -19,18 +19,18 @@ public class controller {
     
     }
 
-
-
-    //get et set
     public controllerMessage getconMessage(){
         return conMsg;
     }
+
     public void setConMessage(controllerMessage conMsg) {
         this.conMsg=conMsg;
     }
+
     public controllerDecouvert getConDecou() {
         return conDecou;
     }
+
     public void setConDecou(controllerDecouvert conDecou) {
         this.conDecou = conDecou;
     }
@@ -45,13 +45,13 @@ public class controller {
 
     public boolean exist_nickname(String newname){
         DefaultListModel<contact> listFriend=this.userlocal.getUserlist();
-        boolean res=false;
+        boolean exite=false;
         for(int i=0;i<listFriend.size();i++){
             contact friend=listFriend.getElementAt(i);
             if(newname.equals(friend.getUserName())){
                 return true;
             }
         }
-        return res;
+        return exite;
     }
 }
