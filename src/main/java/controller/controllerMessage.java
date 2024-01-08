@@ -25,9 +25,10 @@ public class controllerMessage {
          this.tcps=new TCPsender();
          this.userlocal=userlocal;
          this.bdd= new BaseDeDonnee();
-         controllerMessage.messageView=messageView;
+        
       }
-
+     
+     
 
       public void connexion() throws IOException{
          this.tcpr.start();
@@ -38,9 +39,6 @@ public class controllerMessage {
          bdd.addmessageData(userlocal.getUserlocal().getUserName(), userlocal.getUserbyip(ipdes).getUserName(), time, msg);
       }
 
-      public static void updateChatHistory() {
-         messageView.updateHistory();
-      }
 
 
       //getteurs

@@ -46,7 +46,7 @@ public class BaseDeDonnee {
     public void create_new_table(){
             String sql = "CREATE TABLE IF NOT EXISTS history(\n"
             + "time DATETIME , \n" 
-            + "sender varchar primary key, \n"
+            + "sender varchar , \n"
             + "recever varchar ,\n"
             + "message varchar );";
             try (Connection connection = DriverManager.getConnection(url);
@@ -60,8 +60,8 @@ public class BaseDeDonnee {
         }
 
     public void addmessageData(String name1, String name2,Date time,String message){
-        String sql = "INSERT INTO history(time,sender,recever,message) VALUE(?,?,?,?)";
-       
+        String sql = "INSERT INTO history(time,sender,recever,message) VALUES(?,?,?,?)";
+        
             try(Connection connection = DriverManager.getConnection(url);
                 PreparedStatement prepa = connection.prepareStatement(sql)){
                     prepa.setTimestamp(1, new Timestamp(time.getTime()));
@@ -70,8 +70,10 @@ public class BaseDeDonnee {
                     prepa.setString(4, message);
                     prepa.executeUpdate();
                 }catch (SQLException e) {
-                e.printStackTrace();
+                 System.out.println("Model] addmessageData error");
+                    e.printStackTrace();
             }
+       
     }
 
     public List<dataMessage> gethistory(){

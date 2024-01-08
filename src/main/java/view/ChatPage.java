@@ -30,10 +30,10 @@ public class ChatPage  {
         this.adresse=this.user.getUserlocal().getUserIP();
         this.listFriend = this.user.getUserlist();
         //pour tester
-        this.listFriend.addElement(new contact("ZY", adresse));
+        /*this.listFriend.addElement(new contact("ZY", adresse));
         this.listFriend.addElement(new contact("GJJ", adresse));
         this.listFriend.addElement(new contact("Bob", adresse));
-  
+  */
         PagePrincipal();
     }
 

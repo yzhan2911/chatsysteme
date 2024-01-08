@@ -6,8 +6,12 @@ import controller.controllerMessage;
 
 import java.io.*;
 
+
 public class TCPrecever extends Thread{
         private ServerSocket serverSocket;
+        private MessageListener listener;
+
+       
 
         public TCPrecever(int port) throws IOException{
             this.serverSocket=new ServerSocket(port);
@@ -31,6 +35,9 @@ public class TCPrecever extends Thread{
         public void stopConnection() throws IOException {
             serverSocket.close();
         }
+        public void setMessageListener(MessageListener listener) {
+            this.listener = listener;
+        }
 
         class ClientHandler extends Thread {
             private Socket clientSocket;
@@ -44,8 +51,9 @@ public class TCPrecever extends Thread{
                     InputStream in =  clientSocket.getInputStream();
                     DataInputStream dis = new DataInputStream(in);
                     String clientMessage = dis.readUTF();
-                    // update history et fenete text ici
-                    controllerMessage.updateChatHistory();
+                    if (listener != null) {
+                        listener.onMessageReceived(clientMessage);
+                    }
                     dis.close();
                     clientSocket.close();
                     
@@ -54,4 +62,6 @@ public class TCPrecever extends Thread{
                 }
             }
     }
+
+       
 }
