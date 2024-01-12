@@ -58,14 +58,16 @@ public class BaseDeDonnee {
         }
     }
 
-    public List<dataMessage> gethistory(String name){
+      public List<dataMessage> gethistory(String name, String namefriend){
         List<dataMessage> historyList =new ArrayList<>();
-        String sql="SELECT time, sender,recever, message FROM history WHERE recever = ? OR sender = ?" ;
+        String sql="SELECT time, sender,recever, message FROM history WHERE (recever = ? and sender = ?) or (sender = ? and  recever = ?) " ;
         try(Connection connection = DriverManager.getConnection(url);
             PreparedStatement prepa = connection.prepareStatement(sql);
             ){
             prepa.setString(1,name);
-            prepa.setString(2, name);
+            prepa.setString(2, namefriend);
+            prepa.setString(3, name);
+            prepa.setString(4, namefriend);
             ResultSet resultSet = prepa.executeQuery();
             while (resultSet.next()) {
                 Date time = resultSet.getTimestamp("time");
