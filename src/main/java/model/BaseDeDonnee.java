@@ -72,6 +72,7 @@ public class BaseDeDonnee {
                 historyList.add(new dataMessage(time, sender, recever ,message));
             }
         }catch(SQLException e) {
+            System.out.println("[Model] BaseDeDonnee: error de get history");
             e.printStackTrace();
         }
         return historyList;
@@ -86,6 +87,7 @@ public class BaseDeDonnee {
             prepa.executeUpdate();
         }catch(SQLException e) {
             System.out.println("[Model] BaseDeDonnee: error de changer name sender");
+            e.printStackTrace();
         }
         sql ="UPDATE history set recever = ? WHERE recever = ?";
         try(Connection connection = DriverManager.getConnection(url);
@@ -95,6 +97,7 @@ public class BaseDeDonnee {
             prepa.executeUpdate();
         }catch(SQLException e) {
             System.out.println("[Model] BaseDeDonnee: error de changer name recever");
+            e.printStackTrace();
         }
     }
 }

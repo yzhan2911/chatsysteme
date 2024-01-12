@@ -1,12 +1,10 @@
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 
 import org.junit.Test;
 
 import controller.controller;
 import controller.controllerDecouvert;
-import controller.controllerMessage;
 import junit.framework.TestCase;
 import model.user;
 import model.contact.contact;
@@ -18,7 +16,6 @@ public class testsession1 extends TestCase{
     public void testdecouvert() throws InterruptedException, IOException{
         user userlocal = new  user(new contact("yuu5452", InetAddress.getLocalHost()));
         controller app =new controller(userlocal, PORT_DISCOVERY,PORT_COMMUNICATION);
-       
         controllerDecouvert decou = app.getConDecou();
         decou.connexion(PORT_DISCOVERY);    
   }
@@ -32,7 +29,6 @@ public class testsession1 extends TestCase{
         tcpr = new TCPrecever(PORT_COMMUNICATION);
         tcpr.start();
       } catch (IOException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }
       });
@@ -40,7 +36,6 @@ public class testsession1 extends TestCase{
       try {
         tcps.envoyermessage(InetAddress.getLocalHost(), PORT_DISCOVERY, "test Message");
       } catch (IOException e) {
-        // TODO Auto-generated catch block
         e.printStackTrace();
       }});
      
