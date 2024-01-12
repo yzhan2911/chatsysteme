@@ -58,11 +58,14 @@ public class BaseDeDonnee {
         }
     }
 
-    public List<dataMessage> gethistory(){
+    public List<dataMessage> gethistory(String name){
         List<dataMessage> historyList =new ArrayList<>();
-        String sql="SELECT time, sender,recever, message FROM history" ;
+        String sql="SELECT time, sender,recever, message FROM history WHERE recever = ? OR sender = ?" ;
         try(Connection connection = DriverManager.getConnection(url);
-            PreparedStatement prepa = connection.prepareStatement(sql);){
+            PreparedStatement prepa = connection.prepareStatement(sql);
+            ){
+            prepa.setString(1,name);
+            prepa.setString(2, name);
             ResultSet resultSet = prepa.executeQuery();
             while (resultSet.next()) {
                 Date time = resultSet.getTimestamp("time");

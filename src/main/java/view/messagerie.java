@@ -24,6 +24,7 @@ public class messagerie {
 
     public messagerie(user user, contact currentContact,controllerMessage conMsg) {
         this.conMsg = conMsg;
+        String username= user.getUserlocal().getUserName();
         conMsg.getTcpr().setMessageListener(message->{
             try {
 				Thread.sleep(500);
@@ -31,7 +32,7 @@ public class messagerie {
                 System.out.println("[view] messagerie: erreur de sleep");
 				e.printStackTrace();
 			}
-            updateHistory();
+            updateHistory(username);
         });
         frame = new JFrame(currentContact.getUserName());
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -44,7 +45,7 @@ public class messagerie {
         chatHistoryArea = new JTextArea();
         chatHistoryArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(chatHistoryArea);
-        updateHistory();
+        updateHistory(username);
 
         //zone d'envoyer
         JPanel inputPanel = new JPanel();
@@ -58,7 +59,7 @@ public class messagerie {
                         messageField.setText("");
                         conMsg.envoyermsg(msg,currentContact.getUserIP(),now );
                         //appendToChatHistory("["+now+"]"+user.getUserlocal().getUserName()+": "+ msg);
-                        updateHistory();
+                        updateHistory(username);
                     } catch (IOException e1) {
                       System.out.println("[view] messagerie: erreur de envoyer");
                         e1.printStackTrace();
@@ -75,9 +76,9 @@ public class messagerie {
         frame.setVisible(true);
     }
  
-    public void updateHistory() {
+    public void updateHistory(String name) {
         chatHistoryArea.setText(""); // Effacer le contenu actuel
-        List<dataMessage> listdata = this.conMsg.getBdd().gethistory(); 
+        List<dataMessage> listdata = this.conMsg.getBdd().gethistory(name); 
         for(dataMessage data:listdata){
             appendToChatHistory("["+data.time()+"]"+data.sender()+": "+data.message());
         }       
