@@ -32,7 +32,12 @@ public class controllerMessage {
 
       public void envoyermsg(String msg, InetAddress ipdes, Date time) throws UnknownHostException, IOException{
          this.tcps.envoyermessage(ipdes,port, msg);
-         bdd.addmessageData(userlocal.getUserlocal().getUserName(), userlocal.getUserbyip(ipdes).getUserName(), time, msg);
+         String[] parts=msg.split("_");
+                if (parts.length >= 4) {
+                  String sender = parts[0];
+                   String receiver = parts[1];
+                   String msgContent = parts[3];
+                  bdd.addmessageData(sender, receiver, time, msgContent);}
       }
 
       public BaseDeDonnee getBdd() {
