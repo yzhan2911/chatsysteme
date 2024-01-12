@@ -60,7 +60,7 @@ public class BaseDeDonnee {
 
       public List<dataMessage> gethistory(String name, String namefriend){
         List<dataMessage> historyList =new ArrayList<>();
-        String sql="SELECT time, sender,recever, message FROM history WHERE (recever = ? and sender = ?) or (sender = ? and  recever = ?) " ;
+        String sql="SELECT time, sender,recever, message FROM history WHERE (recever = ? AND sender = ?) OR(sender=? AND recever=?)   " ;
         try(Connection connection = DriverManager.getConnection(url);
             PreparedStatement prepa = connection.prepareStatement(sql);
             ){
@@ -73,7 +73,8 @@ public class BaseDeDonnee {
                 Date time = resultSet.getTimestamp("time");
                 String sender = resultSet.getString("sender");
                 String recever = resultSet.getString("recever");
-                String message = resultSet.getString("message"); 
+                String message = resultSet.getString("message");
+                //System.out.println(time+"|||"+sender+"|||"+recever+"|||"+message); 
                 historyList.add(new dataMessage(time, sender, recever ,message));
             }
         }catch(SQLException e) {
@@ -104,6 +105,25 @@ public class BaseDeDonnee {
             System.out.println("[Model] BaseDeDonnee: error de changer name recever");
             e.printStackTrace();
         }
+    }
+
+    public void get_all_history(){
+        String sql ="SELECT time, sender,recever, message FROM history ";
+        try(Connection connection = DriverManager.getConnection(url);
+            PreparedStatement prepa = connection.prepareStatement(sql)) {
+            ResultSet resultSet = prepa.executeQuery();
+            while (resultSet.next()) {
+                Date time = resultSet.getTimestamp("time");
+                String sender = resultSet.getString("sender");
+                String recever = resultSet.getString("recever");
+                String message = resultSet.getString("message");
+                System.out.println(time+"|||"+sender+"|||"+recever+"|||"+message);
+            }
+        }catch(SQLException e) {
+            System.out.println("[Model] BaseDeDonnee: error de get all history");
+            e.printStackTrace();
+        }
+
     }
 }
 

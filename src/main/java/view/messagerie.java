@@ -25,7 +25,8 @@ public class messagerie {
     public messagerie(user user, contact currentContact,controllerMessage conMsg) {
         this.conMsg = conMsg;
         String username= user.getUserlocal().getUserName();
-	String friendname= currentContact.getUserName();
+	    String friendname= currentContact.getUserName();
+        System.out.println(username +"envoyer à "+friendname);
         conMsg.getTcpr().setMessageListener(message->{
             try {
 				Thread.sleep(500);
@@ -33,7 +34,7 @@ public class messagerie {
                 System.out.println("[view] messagerie: erreur de sleep");
 				e.printStackTrace();
 			}
-            updateHistory(username,,friendname);
+            updateHistory(friendname,username);
         });
         frame = new JFrame(currentContact.getUserName());
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -47,7 +48,7 @@ public class messagerie {
         chatHistoryArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(chatHistoryArea);
         updateHistory(username,friendname);
-
+        this.conMsg.getBdd().get_all_history();
         //zone d'envoyer
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new BorderLayout());
@@ -77,9 +78,9 @@ public class messagerie {
         frame.setVisible(true);
     }
  
-    public void updateHistory(String name) {
+    public void updateHistory(String name, String namefriend) {
         chatHistoryArea.setText(""); // Effacer le contenu actuel
-        List<dataMessage> listdata = this.conMsg.getBdd().gethistory(name); 
+        List<dataMessage> listdata = this.conMsg.getBdd().gethistory(name , namefriend); 
         for(dataMessage data:listdata){
             appendToChatHistory("["+data.time()+"]"+data.sender()+": "+data.message());
         }       
