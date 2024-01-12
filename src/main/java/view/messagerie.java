@@ -36,7 +36,7 @@ public class messagerie {
                 if (parts.length >= 4) {
                     String sender = parts[0];
                     String receiver = parts[1];
-                    Date time = convertir_string_date(parts[2]);
+                    Date time = new Date();
                     String msgContent = parts[3];
                     this.conMsg.getBdd().addmessageData(sender, receiver, time, msgContent);
 				Thread.sleep(500);
@@ -98,15 +98,7 @@ public class messagerie {
             appendToChatHistory("["+data.time()+"]"+data.sender()+": "+data.message());
         }       
     }
-    private Date convertir_string_date(String timestamp){
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            return formatter.parse(timestamp);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
+
     private void appendToChatHistory(String message) {
         chatHistoryArea.append(message + "\n");
     }
