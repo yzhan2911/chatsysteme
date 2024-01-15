@@ -6,18 +6,12 @@
 [[[RUN]]]
 " mvn exec:java -Dexec.mainClass="Main" -----for run
 
+[[[UTILISATION]]]
+-Connecter avec votre nom
+-Choisir un ami dans la liste friend si il n'y a personne, alors personne connecte en meme temps 
+-Renouveler manuellement la liste avec bouton list friend
+-changer name  avec le bouton changer nickname
 
-As long as you make sure to keep the `metadata.yml` file at the root of this repository, you are free to do anything. Our suggestion would be to have it organized into something like the following:
+Attention!
+-Quand la fenetre de messagerie est ouvert, veuille ne pas changer le nom, le history ne va pas renouveler
 
-    .gitignore
-    metadata.yml
-    pom.xml
-    README.md
-    src/
-      main/
-      test/
-    doc/
-      uml/
-      report.pdf
-
-In particular, you will soon have to replace this README wit~~h something that describes your own project.
