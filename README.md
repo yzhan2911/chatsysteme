@@ -8,11 +8,11 @@
 #UTILISATION
 - Connecter avec votre nom
 
-- Choisir un ami dans la liste friend si il n'y a personne, alors personne connecte en meme temps 
+- Choisir un ami dans la liste friend si il n'y a personne, alors personne ne connecte en meme temps 
 
-- Renouveler manuellement la liste avec bouton list friend
+- Renouveler manuellement la liste avec bouton "list friend"
 
-- Changer name  avec le bouton changer nickname
+- Changer name  avec le bouton "changer nickname"
 
 - Selectionner votre ami pour communiquer
 
