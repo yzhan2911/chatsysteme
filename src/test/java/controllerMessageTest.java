@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.net.UnknownHostException;
 import java.util.Date;
 
 import org.junit.After;
@@ -14,7 +13,7 @@ import org.junit.Test;
 import controller.controllerMessage;
 import model.user;
 import model.contact.contact;
-import protocols.MessageListener;
+
 
 public class controllerMessageTest  {
 

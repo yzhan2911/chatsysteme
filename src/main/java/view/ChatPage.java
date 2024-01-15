@@ -79,8 +79,8 @@ public class ChatPage  {
                 else
                 {
                 //le changement de nickname dans bdd est ecrit dans UDPrecever
-                this.user.getUserlocal().setUserName(newUsername);
                 this.appdecou.UpdateChangeName(newUsername, PORT_DISCOVERY);
+                this.user.getUserlocal().setUserName(newUsername);
                 usernameLabel.setText("UserName: " + this.user.getUserlocal().getUserName());
                 }
                 

@@ -117,7 +117,7 @@ public class BaseDeDonnee {
                 String sender = resultSet.getString("sender");
                 String recever = resultSet.getString("recever");
                 String message = resultSet.getString("message");
-                System.out.println(time+"|||"+sender+"|||"+recever+"|||"+message);
+               System.out.println(time+"|||"+sender+"|||"+recever+"|||"+message);
             }
         }catch(SQLException e) {
             System.out.println("[Model] BaseDeDonnee: error de get all history");

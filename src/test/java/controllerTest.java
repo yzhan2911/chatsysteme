@@ -3,14 +3,14 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.net.InetAddress;
 
-import javax.swing.DefaultListModel;
+
 
 import org.junit.Test;
 
 import controller.controller;
 import model.user;
 import model.contact.contact;
-import model.contact.etat;
+
 
 public class controllerTest {
 

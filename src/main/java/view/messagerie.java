@@ -61,7 +61,8 @@ public class messagerie {
         chatHistoryArea.setEditable(false);
         JScrollPane scrollPane = new JScrollPane(chatHistoryArea);
         updateHistory(username,friendname);
-        this.conMsg.getBdd().get_all_history();
+        
+        //this.conMsg.getBdd().get_all_history();               debagage
         //zone d'envoyer
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new BorderLayout());

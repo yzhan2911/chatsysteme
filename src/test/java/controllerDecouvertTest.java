@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.After;
 import java.net.InetAddress;
 
-import javax.swing.DefaultListModel;
+
 
 public class controllerDecouvertTest {
     private contact user1;
