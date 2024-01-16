@@ -48,14 +48,17 @@ public class controllerMessageTest  {
       public void testCommunicationBetweenUsers() throws InterruptedException {
           try {
               // Envoyer un message de user1 à lui meme et attendre un peu pour le traitement
-              String message = "Hello, user2!";
-              System.out.println(message);
-              Date time = new Date();
-            //   System.out.println(time);
-              testControllerMessage1.envoyermsg(testUser1.getUserlocal().getUserName() + "_" + user1.getUserName() + "_" + time + "_" + message, user1.getUserIP(), time);
-              Thread.sleep(1000);
-  
-              
+                String message = "Hello, user2!";
+                System.out.println(message);
+                Date time = new Date();
+                //   System.out.println(time);
+                testControllerMessage1.envoyermsg(testUser1.getUserlocal().getUserName() + "_" + user1.getUserName() + "_" + time + "_" + message, user1.getUserIP(), time);
+                Thread.sleep(1000);
+            
+                List<BaseDeDonnee.dataMessage> history = testControllerMessage1.getBdd().gethistory(testUser1.getUserlocal().getUserName(), user1.getUserName());
+                //System.out.println(history);
+                assertTrue("Le message envoyé n'a pas été correctement enregistré dans la base de données.", !history.isEmpty());
+
           } catch (IOException e) {
               e.printStackTrace();
               fail("Exception inattendue: " + e.getMessage());
