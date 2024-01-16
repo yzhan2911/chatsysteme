@@ -5,12 +5,14 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.Date;
+import java.util.List;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import controller.controllerMessage;
+import model.BaseDeDonnee;
 import model.user;
 import model.contact.contact;
 
@@ -47,7 +49,7 @@ public class controllerMessageTest  {
       @Test
       public void testCommunicationBetweenUsers() throws InterruptedException {
           try {
-              // Envoyer un message de user1 à lui meme et attendre un peu pour le traitement
+              // Envoyer un message de user1 à lui meme 
                 String message = "Hello, user2!";
                 System.out.println(message);
                 Date time = new Date();
