@@ -15,7 +15,7 @@ public class UDPrecever extends Thread {
     private user user;
     private DatagramSocket socket;
     private boolean stop;
-
+    private final Object lock = new Object();
     public UDPrecever(int port,user user ) {
         this.user=user;
         this.stop = false;
@@ -121,7 +121,8 @@ public class UDPrecever extends Thread {
                         String newname = parts[1];
                         String ipAddressString = parts[2].substring(parts[2].indexOf("/") + 1);
                         InetAddress ip = InetAddress.getByName(ipAddressString);
-                        BaseDeDonnee.changerUserName(this.user.getUserbyip(ip).getUserName(), newname);
+                        synchronized (lock){
+                            BaseDeDonnee.changerUserName(this.user.getUserbyip(ip).getUserName(), newname);}
                         this.user.getUserbyip(ip).setUserName(newname);
                     }
                 }

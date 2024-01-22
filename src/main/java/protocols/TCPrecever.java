@@ -6,13 +6,14 @@ import java.io.*;
 public class TCPrecever extends Thread{
         private ServerSocket serverSocket;
         private MessageListener listener;
+        private volatile boolean running = true; 
 
         public TCPrecever(int port) throws IOException{
             this.serverSocket=new ServerSocket(port);
         }
     @Override
         public void run() {
-            while (true) {
+            while (running) {
                 try {
                     Socket clientSocket = serverSocket.accept();
                     new ClientHandler(clientSocket).start();
@@ -24,6 +25,7 @@ public class TCPrecever extends Thread{
         }
     
         public void stopConnection() throws IOException {
+            running=false;
             serverSocket.close();
         }
 
@@ -44,8 +46,9 @@ public class TCPrecever extends Thread{
                     DataInputStream dis = new DataInputStream(in);
                     String clientMessage = dis.readUTF();
                     if (listener != null) {
-                        listener.onMessageReceived(clientMessage);
-                    }
+                        synchronized (listener){
+                            listener.onMessageReceived(clientMessage);
+                        }}
                     dis.close();
                     clientSocket.close();
                 } catch (IOException e) {

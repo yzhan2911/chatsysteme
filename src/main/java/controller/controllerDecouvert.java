@@ -34,7 +34,6 @@ public class controllerDecouvert {
     public void deconnexion(int port) throws InterruptedException{
         System.out.println("[Controller] controllerDecouvert: sending DECONNECTION_broadcast");
         this.udps.sendBroadcast("DECONNECT_"+user.getUserlocal().getUserName()+"_"+user.getUserlocal().getUserIP(),port) ;
-        Thread.sleep(1000);
         this.user.getUserlocal().setUserEtat(etat.DISCONNECTED);
         this.udpr.stopReceiver();
     }
