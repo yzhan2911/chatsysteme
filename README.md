@@ -18,3 +18,6 @@
 
 #Attention!
 Quand la fenetre de messagerie est ouvert, veuille ne pas changer le nom, le history ne va pas renouveler
+
+
+#rapport est dans le dossier doc
