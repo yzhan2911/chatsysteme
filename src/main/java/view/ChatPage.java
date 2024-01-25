@@ -92,6 +92,7 @@ public class ChatPage  {
            try {
             this.appdecou.deconnexion(PORT_DISCOVERY);
             frame.dispose();
+            System.exit(0);
         } catch (InterruptedException e1) {
             System.out.println("[view] Chatpage: erreur de deconnecter");
             e1.printStackTrace();
