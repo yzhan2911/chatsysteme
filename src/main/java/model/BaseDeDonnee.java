@@ -19,8 +19,7 @@ public class BaseDeDonnee {
 
     public void create_new_basededonne(){
         DatabaseMetaData meta;
-        try {
-            Connection connection=DriverManager.getConnection(url);
+        try (Connection connection=DriverManager.getConnection(url)){
             meta =connection.getMetaData();
             System.out.println("[Model] BaseDeDonnee: nom de driver: "+meta.getDriverName());
             System.out.println("[Model] BaseDeDonnee: creation base de donnee reussir");
@@ -73,14 +72,15 @@ public class BaseDeDonnee {
             prepa.setString(2, namefriend);
             prepa.setString(3, name);
             prepa.setString(4, namefriend);
-            ResultSet resultSet = prepa.executeQuery();
-            while (resultSet.next()) {
-                Date time = resultSet.getTimestamp("time");
-                String sender = resultSet.getString("sender");
-                String recever = resultSet.getString("recever");
-                String message = resultSet.getString("message");
-                //System.out.println(time+"|||"+sender+"|||"+recever+"|||"+message); 
-                historyList.add(new dataMessage(time, sender, recever ,message));
+            try(  ResultSet resultSet = prepa.executeQuery()){
+                while (resultSet.next()) {
+                    Date time = resultSet.getTimestamp("time");
+                    String sender = resultSet.getString("sender");
+                    String recever = resultSet.getString("recever");
+                    String message = resultSet.getString("message");
+                    //System.out.println(time+"|||"+sender+"|||"+recever+"|||"+message); 
+                    historyList.add(new dataMessage(time, sender, recever ,message));
+                }
             }
         }catch(SQLException e) {
             System.out.println("[Model] BaseDeDonnee: error de get history");
@@ -119,13 +119,14 @@ public class BaseDeDonnee {
         lock.lock();
         try(Connection connection = DriverManager.getConnection(url);
             PreparedStatement prepa = connection.prepareStatement(sql)) {
-            ResultSet resultSet = prepa.executeQuery();
-            while (resultSet.next()) {
-                Date time = resultSet.getTimestamp("time");
-                String sender = resultSet.getString("sender");
-                String recever = resultSet.getString("recever");
-                String message = resultSet.getString("message");
-               System.out.println(time+"|||"+sender+"|||"+recever+"|||"+message);
+            try(  ResultSet resultSet = prepa.executeQuery()){
+                while (resultSet.next()) {
+                    Date time = resultSet.getTimestamp("time");
+                    String sender = resultSet.getString("sender");
+                    String recever = resultSet.getString("recever");
+                    String message = resultSet.getString("message");
+                System.out.println(time+"|||"+sender+"|||"+recever+"|||"+message);
+                }
             }
         }catch(SQLException e) {
             System.out.println("[Model] BaseDeDonnee: error de get all history");
