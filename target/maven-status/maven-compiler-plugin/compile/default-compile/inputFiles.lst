@@ -1,0 +1,16 @@
+/Users/yongjiazeng/Desktop/5SDBD S9/sdf/chatsystem/chatsysteme/src/main/java/Main.java
+/Users/yongjiazeng/Desktop/5SDBD S9/sdf/chatsystem/chatsysteme/src/main/java/controller/controller.java
+/Users/yongjiazeng/Desktop/5SDBD S9/sdf/chatsystem/chatsysteme/src/main/java/controller/controllerDecouvert.java
+/Users/yongjiazeng/Desktop/5SDBD S9/sdf/chatsystem/chatsysteme/src/main/java/controller/controllerMessage.java
+/Users/yongjiazeng/Desktop/5SDBD S9/sdf/chatsystem/chatsysteme/src/main/java/model/BaseDeDonnee.java
+/Users/yongjiazeng/Desktop/5SDBD S9/sdf/chatsystem/chatsysteme/src/main/java/model/contact/contact.java
+/Users/yongjiazeng/Desktop/5SDBD S9/sdf/chatsystem/chatsysteme/src/main/java/model/contact/etat.java
+/Users/yongjiazeng/Desktop/5SDBD S9/sdf/chatsystem/chatsysteme/src/main/java/model/user.java
+/Users/yongjiazeng/Desktop/5SDBD S9/sdf/chatsystem/chatsysteme/src/main/java/protocols/MessageListener.java
+/Users/yongjiazeng/Desktop/5SDBD S9/sdf/chatsystem/chatsysteme/src/main/java/protocols/TCPrecever.java
+/Users/yongjiazeng/Desktop/5SDBD S9/sdf/chatsystem/chatsysteme/src/main/java/protocols/TCPsender.java
+/Users/yongjiazeng/Desktop/5SDBD S9/sdf/chatsystem/chatsysteme/src/main/java/protocols/UDPrecever.java
+/Users/yongjiazeng/Desktop/5SDBD S9/sdf/chatsystem/chatsysteme/src/main/java/protocols/UDPsender.java
+/Users/yongjiazeng/Desktop/5SDBD S9/sdf/chatsystem/chatsysteme/src/main/java/view/ChatPage.java
+/Users/yongjiazeng/Desktop/5SDBD S9/sdf/chatsystem/chatsysteme/src/main/java/view/Connexion.java
+/Users/yongjiazeng/Desktop/5SDBD S9/sdf/chatsystem/chatsysteme/src/main/java/view/messagerie.java
