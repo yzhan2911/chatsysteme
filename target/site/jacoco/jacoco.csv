@@ -1,0 +1,21 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+chatsystem-zeng-zhang,default,Main.new Runnable() {...},12,0,0,0,6,0,2,0,2,0
+chatsystem-zeng-zhang,default,Main,8,0,0,0,3,0,2,0,2,0
+chatsystem-zeng-zhang,view,ChatPage,382,0,10,0,89,0,14,0,9,0
+chatsystem-zeng-zhang,view,messagerie,250,0,4,0,61,0,7,0,5,0
+chatsystem-zeng-zhang,view,Connexion,218,0,2,0,56,0,4,0,3,0
+chatsystem-zeng-zhang,view,Connexion.new ComponentAdapter() {...},34,0,0,0,6,0,2,0,2,0
+chatsystem-zeng-zhang,view,Connexion.new JLabel() {...},32,0,0,0,6,0,2,0,2,0
+chatsystem-zeng-zhang,controller,controllerMessage,3,70,1,1,1,19,2,5,1,5
+chatsystem-zeng-zhang,controller,controllerDecouvert,14,95,0,0,6,19,4,4,4,4
+chatsystem-zeng-zhang,controller,controller,21,48,0,4,9,12,6,4,6,2
+chatsystem-zeng-zhang,model.contact,contact,49,34,10,0,19,11,8,6,3,6
+chatsystem-zeng-zhang,model.contact,etat,0,21,0,0,0,2,0,1,0,1
+chatsystem-zeng-zhang,model,BaseDeDonnee,83,197,2,2,33,63,2,8,1,7
+chatsystem-zeng-zhang,model,user,101,41,15,1,22,12,11,4,3,4
+chatsystem-zeng-zhang,model,BaseDeDonnee.dataMessage,12,15,0,0,0,1,4,1,4,1
+chatsystem-zeng-zhang,protocols,TCPrecever.ClientHandler,20,32,1,1,6,11,1,2,0,2
+chatsystem-zeng-zhang,protocols,UDPrecever,287,119,17,13,63,35,10,9,1,3
+chatsystem-zeng-zhang,protocols,TCPsender,6,49,4,4,3,13,5,3,1,3
+chatsystem-zeng-zhang,protocols,UDPsender,20,32,2,0,9,10,2,2,1,2
+chatsystem-zeng-zhang,protocols,TCPrecever,4,41,0,2,2,15,1,4,1,3

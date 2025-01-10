@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Connexion.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">chatsystem-zeng-zhang</a> &gt; <a href="index.source.html" class="el_package">view</a> &gt; <span class="el_source">Connexion.java</span></div><h1>Connexion.java</h1><pre class="source lang-java linenums">package view;
+
+import java.awt.*;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.UnknownHostException;
+import javax.swing.*;
+
+import controller.controller;
+import controller.controllerDecouvert;
+import controller.controllerMessage;
+import model.user;
+import model.contact.contact;
+
+public class Connexion  {
+   
+    public static final int PORT_DISCOVERY = 1929;
+    public static final int PORT_COMMUNICATION = 1650;
+    
+<span class="nc" id="L23">    public Connexion() throws UnknownHostException{</span>
+<span class="nc" id="L24">        JFrame frame = new JFrame(&quot;Log in!&quot;);</span>
+<span class="nc" id="L25">        frame.setSize(600, 300);</span>
+<span class="nc" id="L26">        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);</span>
+<span class="nc" id="L27">        frame.setLocationRelativeTo(null);</span>
+        //blackground
+        // frame.setBackground(Color.getHSBColor(1,1,1)); //changer la couleur de blackgraound
+        URL url;
+        try {
+<span class="nc" id="L32">            url = new URL(&quot;https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSpM722T0T1P4KeZconZY8NT-hoDGQqybYuA49fcGUQapNPqTjnYOH-qnrZavx5TgofbXg&amp;usqp=CAU&quot;);</span>
+<span class="nc" id="L33">            ImageIcon imageIcon = new ImageIcon(url);</span>
+<span class="nc" id="L34">            JLabel backgroundLabel = new JLabel(imageIcon){   </span>
+
+                // redimensionner l'image en cas de redimensionnement de la fenêtre
+                @Override   
+                public void paintComponent(Graphics g) {
+<span class="nc" id="L39">                    super.paintComponent(g);</span>
+<span class="nc" id="L40">                    Image image = imageIcon.getImage();</span>
+<span class="nc" id="L41">                    Dimension size = this.getSize();</span>
+<span class="nc" id="L42">                    g.drawImage(image, 0, 0, size.width, size.height, this);</span>
+<span class="nc" id="L43">                }</span>
+            };
+<span class="nc" id="L45">            frame.addComponentListener(new ComponentAdapter() {</span>
+
+                // pour détecter les changements de taille de la fenêtre 
+                @Override   
+                public void componentResized(ComponentEvent e) {
+<span class="nc" id="L50">                    Dimension newSize = e.getComponent().getSize();</span>
+<span class="nc" id="L51">                    Image img = imageIcon.getImage().getScaledInstance(newSize.width, newSize.height, Image.SCALE_SMOOTH);</span>
+<span class="nc" id="L52">                    imageIcon.setImage(img);</span>
+<span class="nc" id="L53">                    backgroundLabel.repaint();</span>
+<span class="nc" id="L54">                }</span>
+            });
+<span class="nc" id="L56">            frame.setContentPane(backgroundLabel);</span>
+<span class="nc" id="L57">         } catch (MalformedURLException e) {</span>
+<span class="nc" id="L58">           System.out.println(&quot;[View] connexion: erreur de url&quot;);</span>
+<span class="nc" id="L59">            e.printStackTrace();</span>
+<span class="nc" id="L60">        }</span>
+
+<span class="nc" id="L62">        JPanel mainPanel = new JPanel(new GridLayout(3, 2)); </span>
+<span class="nc" id="L63">        mainPanel.setOpaque(false); //panel en transparent</span>
+<span class="nc" id="L64">        JLabel adresseLabel = new JLabel(&quot;Adresse:&quot;);</span>
+<span class="nc" id="L65">        adresseLabel.setForeground(Color.white);//changer la couleur de JLabel</span>
+<span class="nc" id="L66">        JLabel adresseField=new JLabel(&quot;&quot;+contact.getCurrenAddress());</span>
+<span class="nc" id="L67">        adresseField.setForeground(Color.white);</span>
+<span class="nc" id="L68">        JLabel usernameLabel = new JLabel(&quot;UserName:&quot;);</span>
+<span class="nc" id="L69">        usernameLabel.setForeground(Color.white);</span>
+<span class="nc" id="L70">        JTextField usernameField = new JTextField(20);  </span>
+<span class="nc" id="L71">        mainPanel.add(adresseLabel);</span>
+<span class="nc" id="L72">        mainPanel.add(adresseField);</span>
+<span class="nc" id="L73">        mainPanel.add(usernameLabel);</span>
+<span class="nc" id="L74">        mainPanel.add(usernameField);</span>
+<span class="nc" id="L75">        JLabel errorNickname =new JLabel();</span>
+<span class="nc" id="L76">        errorNickname.setForeground(Color.RED);</span>
+<span class="nc" id="L77">        mainPanel.add(errorNickname);</span>
+        
+        //button login
+<span class="nc" id="L80">        JButton loginButton = new JButton(&quot;log in!&quot;);</span>
+<span class="nc" id="L81">        loginButton.addActionListener(e-&gt;{</span>
+<span class="nc" id="L82">            String username=usernameField.getText();</span>
+            try {
+<span class="nc" id="L84">                user userlocal = new  user(new contact(username, contact.getCurrenAddress()));</span>
+<span class="nc" id="L85">                controller app =new controller(userlocal, PORT_DISCOVERY, PORT_COMMUNICATION);</span>
+<span class="nc" id="L86">                controllerDecouvert decou = app.getConDecou();</span>
+<span class="nc" id="L87">                controllerMessage conMsg=app.getconMessage();</span>
+<span class="nc" id="L88">                decou.connexion(PORT_DISCOVERY); </span>
+<span class="nc bnc" id="L89" title="All 2 branches missed.">                if (app.exist_nickname(username)){</span>
+<span class="nc" id="L90">                    errorNickname.setText(&quot;Ce pseudo est déjà utilisé. Nous vous conseillons d'en choisir un autre!&quot;);</span>
+                }else
+                {
+<span class="nc" id="L93">                SwingUtilities.invokeLater(() -&gt; new ChatPage(app));</span>
+<span class="nc" id="L94">                conMsg.connexion();</span>
+<span class="nc" id="L95">                frame.dispose();</span>
+                }
+<span class="nc" id="L97">            } catch (InterruptedException | IOException e1) {</span>
+<span class="nc" id="L98">                System.out.println(&quot;[View] Connexion: erreur de button login&quot;);</span>
+<span class="nc" id="L99">                e1.printStackTrace();</span>
+<span class="nc" id="L100">            }</span>
+<span class="nc" id="L101">         });</span>
+ 
+
+<span class="nc" id="L104">        JPanel buttonPanel = new JPanel();</span>
+<span class="nc" id="L105">        buttonPanel.setOpaque(false);</span>
+<span class="nc" id="L106">        buttonPanel.add(loginButton);</span>
+<span class="nc" id="L107">        frame.setLayout(new BorderLayout());</span>
+<span class="nc" id="L108">        frame.add(mainPanel,BorderLayout.NORTH);</span>
+<span class="nc" id="L109">        frame.add(buttonPanel,BorderLayout.CENTER);</span>
+
+        //frame.pack(); //s'ajuster à la taille préférée de ses composants.
+<span class="nc" id="L112">        frame.setVisible(true);</span>
+       
+<span class="nc" id="L114">    }</span>
+
+
+
+   
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

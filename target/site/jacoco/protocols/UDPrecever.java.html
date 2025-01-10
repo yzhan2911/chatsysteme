@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>UDPrecever.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">chatsystem-zeng-zhang</a> &gt; <a href="index.source.html" class="el_package">protocols</a> &gt; <span class="el_source">UDPrecever.java</span></div><h1>UDPrecever.java</h1><pre class="source lang-java linenums">package protocols;
+
+import model.BaseDeDonnee;
+import model.user;
+import model.contact.contact;
+import model.contact.etat;
+
+import java.io.*;
+import java.net.*;
+import java.util.Collections;
+import java.util.Enumeration;
+
+
+public class UDPrecever extends Thread {
+    private user user;
+    private DatagramSocket socket;
+    private boolean stop;
+<span class="fc" id="L18">    private final Object lock = new Object();</span>
+<span class="fc" id="L19">    public UDPrecever(int port,user user ) {</span>
+<span class="fc" id="L20">        this.user=user;</span>
+<span class="fc" id="L21">        this.stop = false;</span>
+        try {
+<span class="fc" id="L23">            this.socket = new DatagramSocket(port); </span>
+<span class="fc" id="L24">        } catch (SocketException e) {</span>
+<span class="fc" id="L25">            System.err.println(&quot;[Protocols] UDPrecever: Erreur lors de la création du socket UDP&quot;);</span>
+<span class="fc" id="L26">            e.printStackTrace();</span>
+<span class="fc" id="L27">        }</span>
+<span class="fc" id="L28">    }</span>
+
+    public synchronized void RépondreAuMessageDecouvert(contact userlocal,InetAddress addressDes,int port) {
+<span class="nc" id="L31">        String reponse=&quot;REPONSE_&quot;+userlocal.getUserName()+&quot;_&quot;+userlocal.getUserIP()+&quot;_&quot;+userlocal.getUserEtat();</span>
+<span class="nc" id="L32">        byte[] buffer= reponse.getBytes();</span>
+<span class="nc" id="L33">        try(DatagramSocket socket = new DatagramSocket()){</span>
+<span class="nc" id="L34">            DatagramPacket packet = new DatagramPacket(buffer, buffer.length, addressDes, port);</span>
+<span class="nc" id="L35">            socket.send(packet);</span>
+<span class="nc" id="L36">            System.out.println(&quot;[Protocols] UDPrecever: bien envoi:&quot;+reponse+addressDes);</span>
+<span class="nc" id="L37">        }catch (IOException e){</span>
+<span class="nc" id="L38">            System.err.println(&quot;[Protocols] UDPrecever: Erreur quand recever répond son propre donnée&quot;);</span>
+<span class="nc" id="L39">            e.printStackTrace();</span>
+<span class="nc" id="L40">        }</span>
+<span class="nc" id="L41">    }</span>
+
+    @Override
+    public void run() {
+<span class="fc" id="L45">        int port =socket.getLocalPort();</span>
+<span class="fc" id="L46">        System.out.println(&quot;[Protocols] UDPrecever: Démarré et en écoute sur le port &quot; + port);</span>
+<span class="fc bfc" id="L47" title="All 2 branches covered.">        while (!this.stop) {</span>
+            try {
+<span class="fc" id="L49">                byte[] buffer = new byte[1024 ]; </span>
+<span class="fc" id="L50">                DatagramPacket datagramPacket = new DatagramPacket(buffer, buffer.length);               </span>
+<span class="fc" id="L51">                socket.receive(datagramPacket);              </span>
+<span class="fc" id="L52">                InetAddress addressSource = datagramPacket.getAddress();            </span>
+<span class="fc" id="L53">                System.out.println(addressSource+&quot;/&quot;+port);</span>
+
+                // éviter de rajouter lui meme
+<span class="fc" id="L56">                boolean  Pas_self =true;</span>
+<span class="fc" id="L57">                Enumeration&lt;NetworkInterface&gt; nets = NetworkInterface.getNetworkInterfaces();</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">                for (NetworkInterface netint : Collections.list(nets)){</span>
+<span class="fc" id="L59">                Enumeration&lt;InetAddress&gt; inetAddresses = netint.getInetAddresses();</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">                    for (InetAddress inetAddress : Collections.list(inetAddresses)) {</span>
+<span class="fc bfc" id="L61" title="All 2 branches covered.">                        if (addressSource.equals(inetAddress)){</span>
+<span class="fc" id="L62">                            Pas_self=false;</span>
+                        }
+<span class="fc" id="L64">                    }</span>
+<span class="fc" id="L65">                }</span>
+<span class="pc bpc" id="L66" title="1 of 2 branches missed.">                if (Pas_self){</span>
+                
+                // Traitement du paquet reçu
+<span class="nc" id="L69">                    String receivedMessage = new String(datagramPacket.getData(), 0, datagramPacket.getLength());</span>
+<span class="nc" id="L70">                    System.out.println(&quot;[Protocols] UDPrecever: message decouvert reçu : &quot; + receivedMessage);</span>
+
+                    //Dans le cas de déconnection, enlever le user dans la liste
+<span class="nc bnc" id="L73" title="All 2 branches missed.">                    if(receivedMessage.startsWith(&quot;DECONNECT&quot;)){</span>
+<span class="nc" id="L74">                        String[] parts = receivedMessage.split(&quot;_&quot;);</span>
+<span class="nc" id="L75">                        String name = parts[1];</span>
+<span class="nc" id="L76">                        String ipAddressString = parts[2].substring(parts[2].indexOf(&quot;/&quot;) + 1);</span>
+<span class="nc" id="L77">                        InetAddress ip = InetAddress.getByName(ipAddressString);</span>
+<span class="nc" id="L78">                        contact useremo = new contact(name, ip);</span>
+<span class="nc" id="L79">                        user.removeuser(useremo);</span>
+<span class="nc" id="L80">                    }</span>
+
+                    // Dans le cas de connexion, recever Traitement le paquet et envoyer son donné 
+<span class="nc bnc" id="L83" title="All 2 branches missed.">                    else if (receivedMessage.startsWith(&quot;DECOUVERTE_&quot;)){</span>
+<span class="nc" id="L84">                        System.out.println(&quot;[Protocols] UDPrecever: Répond_au_message DECOUVERTE&quot;);</span>
+<span class="nc" id="L85">                        String[] parts2 = receivedMessage.split(&quot;_&quot;);</span>
+<span class="nc bnc" id="L86" title="All 2 branches missed.">                        if (parts2.length&gt;=4){                            </span>
+<span class="nc" id="L87">                            String name = parts2[1];                 </span>
+<span class="nc" id="L88">                            String ipAddressString = parts2[2].substring(parts2[2].indexOf(&quot;/&quot;) + 1);</span>
+<span class="nc" id="L89">                            InetAddress ip = InetAddress.getByName(ipAddressString);                        </span>
+<span class="nc" id="L90">                            etat etatuser=etat.valueOf(parts2[3]);        </span>
+<span class="nc" id="L91">                            contact useradd = new contact(name, ip);</span>
+<span class="nc" id="L92">                            useradd.setUserEtat(etatuser);</span>
+<span class="nc" id="L93">                            this.user.adduser(useradd);</span>
+                        }
+<span class="nc" id="L95">                        RépondreAuMessageDecouvert( this.user.getUserlocal(), addressSource, port);</span>
+<span class="nc" id="L96">                    }</span>
+
+                    //Dans le cas de connexion, sender Traitement le paquet de recever 
+<span class="nc bnc" id="L99" title="All 2 branches missed.">                    else if(receivedMessage.startsWith(&quot;REPONSE_&quot;)) {</span>
+<span class="nc" id="L100">                        System.out.println(&quot;[Protocols] UDPrecever: Rucu le message REPONSE et traite les données&quot;);</span>
+<span class="nc" id="L101">                        String[] parts = receivedMessage.split(&quot;_&quot;);</span>
+<span class="nc bnc" id="L102" title="All 4 branches missed.">                        if (parts.length&gt;=4 &amp;&amp; parts[0].equals(&quot;REPONSE&quot;)){</span>
+<span class="nc" id="L103">                            String name = parts[1];</span>
+<span class="nc" id="L104">                            String ipAddressString = parts[2].substring(parts[2].indexOf(&quot;/&quot;) + 1);</span>
+<span class="nc" id="L105">                            InetAddress ip = InetAddress.getByName(ipAddressString);</span>
+<span class="nc" id="L106">                            etat etatuser=etat.valueOf(parts[3]);</span>
+<span class="nc" id="L107">                            contact useradd = new contact(name, ip);</span>
+<span class="nc" id="L108">                            useradd.setUserEtat(etatuser);</span>
+<span class="nc" id="L109">                            this.user.adduser(useradd);</span>
+<span class="nc" id="L110">                            System.out.println(&quot;[Protocols] UDPrecever: bien connexion&quot;);</span>
+<span class="nc" id="L111">                            System.out.println(this.user.getUserlist());</span>
+<span class="nc" id="L112">                        }</span>
+                        else {
+<span class="nc" id="L114">                            System.err.println(&quot;[Protocols] UDPrecever: error de decouvert&quot;);</span>
+                        }
+<span class="nc" id="L116">                    }</span>
+                    
+                    //Dans le cas de changement de name
+<span class="nc bnc" id="L119" title="All 2 branches missed.">                    else if(receivedMessage.startsWith(&quot;CHANGEDNAME&quot;)){</span>
+<span class="nc" id="L120">                        String[] parts = receivedMessage.split(&quot;_&quot;);</span>
+<span class="nc" id="L121">                        String newname = parts[1];</span>
+<span class="nc" id="L122">                        String ipAddressString = parts[2].substring(parts[2].indexOf(&quot;/&quot;) + 1);</span>
+<span class="nc" id="L123">                        InetAddress ip = InetAddress.getByName(ipAddressString);</span>
+<span class="nc" id="L124">                        synchronized (lock){</span>
+<span class="nc" id="L125">                            BaseDeDonnee.changerUserName(this.user.getUserbyip(ip).getUserName(), newname);}</span>
+<span class="nc" id="L126">                        this.user.getUserbyip(ip).setUserName(newname);</span>
+                    }
+                }
+<span class="nc" id="L129">            }catch (IOException e) {</span>
+<span class="nc bnc" id="L130" title="All 2 branches missed.">                if (this.stop) {</span>
+<span class="nc" id="L131">                    System.out.println(&quot;[Protocols] UDPrecever: Arrêt du thread UDPReceiver.&quot;);</span>
+                } else {
+<span class="nc" id="L133">                    System.out.println(&quot;[Protocols] UDPrecever: error d'arrêt du thread UDPReceiver.&quot;);</span>
+<span class="nc" id="L134">                    e.printStackTrace();</span>
+                }
+<span class="pc" id="L136">            }</span>
+        }
+<span class="fc" id="L138">        socket.close();</span>
+<span class="fc" id="L139">    }</span>
+
+    public void stopReceiver() {
+<span class="fc" id="L142">        this.stop = true;</span>
+<span class="fc bfc" id="L143" title="All 4 branches covered.">        if (this.socket != null &amp;&amp; !this.socket.isClosed()) {</span>
+<span class="fc" id="L144">            this.socket.close();</span>
+        }
+<span class="fc" id="L146">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>controllerMessage.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">chatsystem-zeng-zhang</a> &gt; <a href="index.source.html" class="el_package">controller</a> &gt; <span class="el_source">controllerMessage.java</span></div><h1>controllerMessage.java</h1><pre class="source lang-java linenums">package controller;
+
+import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.Date;
+
+import model.BaseDeDonnee;
+import model.user;
+import protocols.TCPrecever;
+import protocols.TCPsender;
+
+public class controllerMessage {
+      private TCPrecever tcpr;
+      private TCPsender tcps;
+      private user userlocal;
+      private int port;
+      private BaseDeDonnee bdd;
+
+<span class="fc" id="L20">      public controllerMessage(user userlocal,int port) throws IOException{</span>
+<span class="fc" id="L21">         this.port=port;</span>
+<span class="fc" id="L22">         this.tcpr=new TCPrecever(port) ;</span>
+<span class="fc" id="L23">         this.tcps=new TCPsender();</span>
+<span class="fc" id="L24">         this.userlocal=userlocal;</span>
+<span class="fc" id="L25">         this.bdd= new BaseDeDonnee();</span>
+        
+<span class="fc" id="L27">      }</span>
+     
+      public void connexion() throws IOException{
+<span class="fc" id="L30">         this.tcpr.start();</span>
+<span class="fc" id="L31">      }</span>
+
+      public void envoyermsg(String msg, InetAddress ipdes, Date time) throws UnknownHostException, IOException{
+<span class="fc" id="L34">         this.tcps.envoyermessage(ipdes,port, msg);</span>
+<span class="fc" id="L35">         String[] parts=msg.split(&quot;_&quot;);</span>
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">                if (parts.length &gt;= 4) {</span>
+<span class="fc" id="L37">                  String sender = parts[0];</span>
+<span class="fc" id="L38">                   String receiver = parts[1];</span>
+<span class="fc" id="L39">                   String msgContent = parts[3];</span>
+<span class="fc" id="L40">                  bdd.addmessageData(sender, receiver, time, msgContent);}</span>
+<span class="fc" id="L41">      }</span>
+
+      public BaseDeDonnee getBdd() {
+<span class="fc" id="L44">         return bdd;</span>
+      }
+      public TCPrecever getTcpr() {
+<span class="fc" id="L47">         return tcpr;</span>
+      }
+      public TCPsender getTcps() {
+<span class="nc" id="L50">         return tcps;</span>
+      }
+      
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

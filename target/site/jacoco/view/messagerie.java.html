@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="zh"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>messagerie.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">chatsystem-zeng-zhang</a> &gt; <a href="index.source.html" class="el_package">view</a> &gt; <span class="el_source">messagerie.java</span></div><h1>messagerie.java</h1><pre class="source lang-java linenums">package view;
+
+import java.awt.BorderLayout;
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+
+import controller.controllerMessage;
+import model.BaseDeDonnee.dataMessage;
+import model.user;
+import model.contact.contact;
+
+public class messagerie {
+    private JFrame frame;
+    private JTextArea chatHistoryArea;
+    private JTextField messageField;
+    private controllerMessage conMsg;
+
+<span class="nc" id="L26">    public messagerie(user user, contact currentContact,controllerMessage conMsg) {</span>
+<span class="nc" id="L27">        this.conMsg = conMsg;</span>
+<span class="nc" id="L28">        String username= user.getUserlocal().getUserName();</span>
+<span class="nc" id="L29">	    String friendname= currentContact.getUserName();</span>
+<span class="nc" id="L30">        System.out.println(username +&quot;envoyer à &quot;+friendname);</span>
+<span class="nc" id="L31">        conMsg.getTcpr().setMessageListener(message-&gt;{</span>
+            try {
+<span class="nc" id="L33">                String[] parts = message.split(&quot;_&quot;);</span>
+<span class="nc bnc" id="L34" title="All 2 branches missed.">                if (parts.length &gt;= 4) {</span>
+<span class="nc" id="L35">                    String sender = parts[0];</span>
+<span class="nc" id="L36">                    String receiver = parts[1];</span>
+<span class="nc" id="L37">                    Date time = new Date();</span>
+<span class="nc" id="L38">                    String msgContent = parts[3];</span>
+<span class="nc" id="L39">                    this.conMsg.getBdd().addmessageData(sender, receiver, time, msgContent);</span>
+<span class="nc" id="L40">				Thread.sleep(500);</span>
+<span class="nc" id="L41">                updateHistory(friendname,username);}</span>
+<span class="nc" id="L42">                else{System.out.println(&quot;[view] messagerie: recever un error message&quot;);}</span>
+<span class="nc" id="L43">            } catch (InterruptedException e) {</span>
+<span class="nc" id="L44">                System.out.println(&quot;[view] messagerie: erreur de sleep&quot;);</span>
+<span class="nc" id="L45">				e.printStackTrace();</span>
+<span class="nc" id="L46">			}</span>
+            
+            
+<span class="nc" id="L49">        });</span>
+<span class="nc" id="L50">        frame = new JFrame(currentContact.getUserName());</span>
+<span class="nc" id="L51">        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);</span>
+<span class="nc" id="L52">        frame.setSize(600, 300);</span>
+<span class="nc" id="L53">        frame.setLocationRelativeTo(null);</span>
+<span class="nc" id="L54">        JPanel mainPanel = new JPanel();</span>
+<span class="nc" id="L55">        mainPanel.setLayout(new BorderLayout());</span>
+
+        //zone histoire de la conservation
+<span class="nc" id="L58">        chatHistoryArea = new JTextArea();</span>
+<span class="nc" id="L59">        chatHistoryArea.setEditable(false);</span>
+<span class="nc" id="L60">        JScrollPane scrollPane = new JScrollPane(chatHistoryArea);</span>
+<span class="nc" id="L61">        updateHistory(username,friendname);</span>
+        
+        //this.conMsg.getBdd().get_all_history();               debagage
+        //zone d'envoyer
+<span class="nc" id="L65">        JPanel inputPanel = new JPanel();</span>
+<span class="nc" id="L66">        inputPanel.setLayout(new BorderLayout());</span>
+<span class="nc" id="L67">        messageField = new JTextField();</span>
+<span class="nc" id="L68">        JButton sendButton = new JButton(&quot;Envoyer&quot;);</span>
+<span class="nc" id="L69">        sendButton.addActionListener(e-&gt; {</span>
+                    try {
+<span class="nc" id="L71">                        Date now = new Date(); // Obtient la date et l'heure actuelles</span>
+<span class="nc" id="L72">                        String msg = messageField.getText();</span>
+<span class="nc" id="L73">                        messageField.setText(&quot;&quot;);</span>
+<span class="nc" id="L74">                        conMsg.envoyermsg(username+&quot;_&quot;+friendname+&quot;_&quot;+now+&quot;_&quot;+msg,currentContact.getUserIP(),now );</span>
+                        //appendToChatHistory(&quot;[&quot;+now+&quot;]&quot;+user.getUserlocal().getUserName()+&quot;: &quot;+ msg);
+<span class="nc" id="L76">                        updateHistory(username,friendname);</span>
+<span class="nc" id="L77">                    } catch (IOException e1) {</span>
+<span class="nc" id="L78">                      System.out.println(&quot;[view] messagerie: erreur de envoyer&quot;);</span>
+<span class="nc" id="L79">                        e1.printStackTrace();</span>
+<span class="nc" id="L80">                    }</span>
+                
+            
+<span class="nc" id="L83">        });</span>
+
+<span class="nc" id="L85">        inputPanel.add(messageField, BorderLayout.CENTER);</span>
+<span class="nc" id="L86">        inputPanel.add(sendButton, BorderLayout.EAST);</span>
+<span class="nc" id="L87">        mainPanel.add(scrollPane, BorderLayout.CENTER);</span>
+<span class="nc" id="L88">        mainPanel.add(inputPanel, BorderLayout.SOUTH);</span>
+<span class="nc" id="L89">        frame.add(mainPanel);</span>
+<span class="nc" id="L90">        frame.setVisible(true);</span>
+<span class="nc" id="L91">    }</span>
+ 
+    public void updateHistory(String name, String namefriend) {
+<span class="nc" id="L94">        chatHistoryArea.setText(&quot;&quot;); // Effacer le contenu actuel</span>
+<span class="nc" id="L95">        List&lt;dataMessage&gt; listdata = this.conMsg.getBdd().gethistory(name , namefriend); </span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">        for(dataMessage data:listdata){</span>
+<span class="nc" id="L97">            appendToChatHistory(&quot;[&quot;+data.time()+&quot;]&quot;+data.sender()+&quot;: &quot;+data.message());</span>
+<span class="nc" id="L98">        }       </span>
+<span class="nc" id="L99">    }</span>
+
+    private void appendToChatHistory(String message) {
+<span class="nc" id="L102">        chatHistoryArea.append(message + &quot;\n&quot;);</span>
+<span class="nc" id="L103">    }</span>
+    
+    
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
